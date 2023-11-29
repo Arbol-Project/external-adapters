@@ -1,15 +1,10 @@
 FROM continuumio/miniconda3
 
-ARG GITHUB_WORKSPACE
-
-WORKDIR ${GITHUB_WORKSPACE}/zarr-client
-RUN echo ls
-
 WORKDIR /adapter
 COPY ./ ./
 
 # RUN pip install git+https://${GITHUB_TOKEN}@github.com/Arbol-Project/zarr-client.git
-RUN pip install ./zarr-client/
+RUN pip install ../zarr-client/
 
 RUN conda env create -f conda.env.yml
 
