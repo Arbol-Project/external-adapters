@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3
+FROM --platform=linux/amd64 continuumio/miniconda3
 
 WORKDIR /adapter
 COPY ./adapter ./
