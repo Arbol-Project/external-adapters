@@ -1,6 +1,6 @@
 FROM continuumio/miniconda3
 
-# ARG GITHUB_TOKEN
+ARG GITHUB_TOKEN
 WORKDIR /adapter
 COPY ./ ./
 
