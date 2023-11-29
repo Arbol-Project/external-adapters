@@ -21,6 +21,11 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::574269834288:role/adapter-github-actions-role
         aws-region: us-east-1
+    
+    - name: Setup ssh-agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Get ECS Integration
       run: curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
@@ -34,11 +39,6 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-
-    - name: Setup ssh-agent
-      uses: webfactory/ssh-agent@v0.8.0
-      with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Build
       uses: docker/build-push-action@v5
