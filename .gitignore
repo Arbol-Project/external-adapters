@@ -1,4 +1,4 @@
-adapter/.env
+*.env
 adapter/repos
 adapter/repos/*
 __pycache__/
