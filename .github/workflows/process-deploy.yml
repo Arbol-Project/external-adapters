@@ -14,6 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout Dependency repository
+      uses: actions/checkout@v4
+      with:
+        repository: Arbol-Project/zarr-client
+        token: ${{ secrets.DOCKER_PAT }}
+        path: zarr-client
+
     - name: Checkout Git repository
       uses: actions/checkout@v4
     - name: Configure AWS credentials
