@@ -39,9 +39,9 @@ jobs:
 
     - name: Build
       uses: docker/build-push-action@v5
+      env:
+        GITHUB_WORKSPACE: $GITHUB_WORKSPACE
       with:
-        build-args: |
-          GITHUB_WORKSPACE=$GITHUB_WORKSPACE
         context: adapter
         push: false
         tags: |
