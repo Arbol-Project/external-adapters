@@ -1,7 +1,9 @@
 FROM continuumio/miniconda3
 
-# Copy the two files in place and fix different path/locations inside the Docker image
 ARG GITHUB_WORKSPACE
+
+WORKDIR ${GITHUB_WORKSPACE}/zarr-client
+RUN echo ls
 
 WORKDIR /adapter
 COPY ./ ./
