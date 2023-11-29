@@ -29,6 +29,11 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
+    - name: Configure SSH agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
     - name: Build
       uses: docker/build-push-action@v5
       with:
@@ -37,6 +42,8 @@ jobs:
         tags: |
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:${{ github.sha }}
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:latest
+        ssh: |
+          default=${{ env.SSH_AUTH_SOCK }}
       
     # - name: Build
     #   working-directory: adapter
