@@ -1,7 +1,13 @@
 FROM continuumio/miniconda3
 
+# Copy the two files in place and fix different path/locations inside the Docker image
+
+
 WORKDIR /adapter
 COPY ./ ./
+
+COPY root-config /root/
+RUN sed 's|/home/runner|/root|g' -i.bak /root/.ssh/config
 
 RUN conda env create -f conda.env.yml
 
