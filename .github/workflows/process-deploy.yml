@@ -39,6 +39,7 @@ jobs:
       with:
         context: adapter
         push: false
+        # build-arg: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
         tags: |
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:${{ github.sha }}
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:latest
