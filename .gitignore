@@ -1,0 +1,6 @@
+adapter/.env
+adapter/repos
+adapter/repos/*
+__pycache__/
+.DS_Store
+
