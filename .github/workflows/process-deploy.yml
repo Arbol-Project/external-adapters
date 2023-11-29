@@ -14,14 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Dependency repository
-      uses: actions/checkout@v4
-      with:
-        repository: Arbol-Project/zarr-client
-        token: ${{ secrets.DOCKER_PAT }}
-        path: zarr-client
-        persist-credentials: true
-
     - name: Checkout Git repository
       uses: actions/checkout@v4
     - name: Configure AWS credentials
@@ -29,6 +21,14 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::574269834288:role/adapter-github-actions-role
         aws-region: us-east-1
+
+    - name: Checkout Dependency repository
+      uses: actions/checkout@v4
+      with:
+        repository: Arbol-Project/zarr-client
+        token: ${{ secrets.DOCKER_PAT }}
+        path: zarr-client
+        persist-credentials: true
 
     - name: Get ECS Integration
       run: curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
