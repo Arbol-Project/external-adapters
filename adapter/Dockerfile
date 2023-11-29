@@ -4,6 +4,7 @@ WORKDIR /adapter
 COPY ./ ./
 
 # RUN pip install git+https://${GITHUB_TOKEN}@github.com/Arbol-Project/zarr-client.git
+RUN ls ../
 RUN pip install ../zarr-client/
 
 RUN conda env create -f conda.env.yml
