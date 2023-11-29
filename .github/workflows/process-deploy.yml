@@ -21,7 +21,7 @@ jobs:
       with:
         role-to-assume: arn:aws:iam::574269834288:role/adapter-github-actions-role
         aws-region: us-east-1
-    
+
     - name: Setup ssh-agent
       uses: webfactory/ssh-agent@v0.8.0
       with:
@@ -49,7 +49,7 @@ jobs:
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:${{ github.sha }}
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:latest
         ssh: |
-          default="${{ env.SSH_AUTH_SOCK }}"
+          default=${{ env.SSH_AUTH_SOCK }}
 
     - name: Push External Adapter to Amazon ECR
       id: push-adapter-image
