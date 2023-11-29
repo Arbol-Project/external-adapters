@@ -23,6 +23,12 @@ jobs:
         repository: Arbol-Project/zarr-client
         token: ${{ secrets.DOCKER_PAT }}
         path: zarr-client
+
+    - name: Copy Zarr Client
+      run: |
+        echo $GITHUB_WORKSPACE
+        ls $GITHUB_WORKSPACE/zarr-client
+        cp -r $GITHUB_WORKSPACE/zarr-client ~/adapter/zarr-client
       
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
