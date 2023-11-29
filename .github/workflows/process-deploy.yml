@@ -35,6 +35,11 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
+    - name: Setup ssh-agent
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
     - name: Build
       uses: docker/build-push-action@v5
       with:
@@ -43,8 +48,8 @@ jobs:
         tags: |
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:${{ github.sha }}
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:latest
-        secrets: |
-          GIT_AUTH_TOKEN=${{ secrets.DOCKER_PAT }}
+        ssh: |
+          default="${{ env.SSH_AUTH_SOCK }}"
 
     - name: Push External Adapter to Amazon ECR
       id: push-adapter-image
