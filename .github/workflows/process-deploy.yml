@@ -36,10 +36,7 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
-
-    - name: Login to Docker Registry
-      run: echo "${{ secrets.DOCKER_PAT }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
+      
     - name: Build
       working-directory: adapter
       env: 
