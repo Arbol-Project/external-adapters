@@ -20,6 +20,7 @@ jobs:
         repository: Arbol-Project/zarr-client
         token: ${{ secrets.DOCKER_PAT }}
         path: zarr-client
+        persist-credentials: true
 
     - name: Checkout Git repository
       uses: actions/checkout@v4
