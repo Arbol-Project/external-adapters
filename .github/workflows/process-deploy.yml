@@ -13,6 +13,12 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
 
+  - name: Checkout Dependency repository
+    uses: actions/checkout@v4
+    with:
+      repository: Arbol-Project/zarr-client
+      path: main
+
     steps:
     - name: Checkout Git repository
       uses: actions/checkout@v4
