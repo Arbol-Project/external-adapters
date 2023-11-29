@@ -27,7 +27,9 @@ jobs:
     - name: Copy Zarr Client
       run: |
         echo $GITHUB_WORKSPACE
+        ls $GITHUB_WORKSPACE
         ls $GITHUB_WORKSPACE/zarr-client
+        ls ~
         cp -r $GITHUB_WORKSPACE/zarr-client ~/adapter/zarr-client
       
     - name: Configure AWS credentials
