@@ -42,7 +42,7 @@ jobs:
       with:
         build-args: |
           GITHUB_WORKSPACE=${{ github.workspace }}
-        context: adapter
+        context: .
         push: false
         tags: |
           ${{ steps.login-ecr.outputs.registry }}/external-adapter:${{ github.sha }}
