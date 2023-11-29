@@ -6,9 +6,6 @@ ARG GITHUB_WORKSPACE
 WORKDIR /adapter
 COPY ./ ./
 
-COPY root-config /root/
-RUN sed 's|/home/runner|/root|g' -i.bak /root/.ssh/config
-
 RUN conda env create -f conda.env.yml
 
 SHELL ["conda", "run", "-n", "arbol-dapp", "/bin/bash", "-c"]
