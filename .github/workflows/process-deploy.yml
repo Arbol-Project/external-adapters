@@ -41,7 +41,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         build-args: |
-          GITHUB_WORKSPACE=${{ github.workspace }}
+          GITHUB_WORKSPACE=$GITHUB_WORKSPACE
         context: adapter
         push: false
         tags: |
