@@ -18,7 +18,7 @@ Chainlink external adapters for accessing dClimate weather data on IPFS for smar
     - Inputs: 
         - `string request_url`: the request URL describing the dClimate data to fetch on IPFS. This request URL follows the same format as the API at `https://api.dclimate.net/` for V4 API requests but excludes the root domain (so request URL strings begin at `/apiv4/`). Importantly, V3 request URLs are no longer supported.
         - `string[] spatial_parameters`: the parameters for filtering the data spatially. 
-        - `string[] temporal_parameters`: the parameters for aggregating the filtered data temporally. See `SimpleParametricCoveragePolygon.sol` for all specifications.
+        - `string[] temporal_parameters`: the parameters for aggregating the filtered data temporally. See `examples/SimpleParametricCoveragePolygon.sol` for all specifications.
     - Outputs:
         - `uint256 value`: the final value returned after aggregating the requested data. All numerical values that are not timestamps are multiplied by `1e18` and cast to integers before being returned on-chain.
         - `string unit`: the unit for the returned final value, if applicable. If the request fails, the adapter attempts to return an error message in the unit slot.
