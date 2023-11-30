@@ -1,0 +1,32 @@
+type = "directrequest"
+schemaVersion = 1
+name = "dclimate-apiv4-polygon"
+externalJobID = "7678aeaa-5bfa-4811-b0a1-6b5a6f05069a"
+maxTaskDuration = "30s"
+contractAddress = "0x2621E9C0bc1975E74Ec465DF7357607E617C7FF9"
+evmChainID = "137"
+minContractPaymentLinkJuels = "0"
+observationSource = """
+    decode_log   [type=ethabidecodelog
+                  abi="OracleRequest(bytes32 indexed specId, address requester, bytes32 requestId, uint256 payment, address callbackAddr, bytes4 callbackFunctionId, uint256 cancelExpiration, uint256 dataVersion, bytes data)"
+                  data="$(jobRun.logData)"
+                  topics="$(jobRun.logTopics)"]
+    decode_cbor  [type=cborparse data="$(decode_log.data)"]
+    api_adapter  [type="bridge" name="api-adapter" timeout="600s" requestData="{\\"data\\":{\\"request_url\\": $(decode_cbor.request_url), \\"spatial_parameters\\": $(decode_cbor.spatial_parameters), \\"temporal_parameters\\": $(decode_cbor.temporal_parameters)}}"]
+    
+    decode_log -> decode_cbor -> api_adapter
+
+    unit_parse   [type=jsonparse path="result,unit" data="$(api_adapter)"]
+    data_parse   [type=jsonparse path="result,data" data="$(api_adapter)"]
+
+    encode_data  [type=ethabiencode abi="(bytes32 requestId, uint256 value, string unit)" data="{ \\"requestId\\": $(decode_log.requestId), \\"value\\": $(data_parse), \\"unit\\": $(unit_parse) }"]
+    encode_tx    [type=ethabiencode
+                  abi="fulfillOracleRequest2(bytes32 requestId, uint256 payment, address callbackAddress, bytes4 callbackFunctionId, uint256 expiration, bytes calldata data)"
+                  data="{\\"requestId\\": $(decode_log.requestId), \\"payment\\": $(decode_log.payment), \\"callbackAddress\\": $(decode_log.callbackAddr), \\"callbackFunctionId\\": $(decode_log.callbackFunctionId), \\"expiration\\": $(decode_log.cancelExpiration), \\"data\\": $(encode_data)}"
+                 ]
+    submit_tx    [type=ethtx from="[\\"0xa83ef656DB50ab9E82B8D1c569F427378f36171B\\"]" evmChainID="137" to="0x2621E9C0bc1975E74Ec465DF7357607E617C7FF9" data="$(encode_tx)"]
+    
+    api_adapter -> unit_parse -> encode_data
+    api_adapter -> data_parse -> encode_data
+    encode_data -> encode_tx -> submit_tx
+"""
