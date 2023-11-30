@@ -59,16 +59,23 @@ contract SimpleV4ParametricMumbai is ChainlinkClient {
      * @dev Callback function for chainlink oracle requests
      * numberical results multiplied by 1e18 and cast to integer
      */
-    function fulfillRequest(bytes32 _requestId, uint256 _result, string memory _unit)
+    function fulfillRequest(bytes32 _requestId,  uint64 _value, string memory _unit)
         public
         recordChainlinkFulfillment(_requestId)
     {
         uint someThreshold;
-        data = _result;
+        data = uint256(_value);
         unit = _unit;
         if (data > someThreshold) {
             doSomething();
         }
+    }
+
+    function resetData()
+        public
+    {
+        data = 0;
+        unit = "";
     }
 
     // do something with the parametric result

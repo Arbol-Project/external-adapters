@@ -26,7 +26,7 @@ contract SimpleV4ParametricPolygon is ChainlinkClient {
      * 
      * Example parameters for single point query
      */
-    string[] spatial_parameters = ["point_params", "13.34126091", "103.39190674"];
+    string[] spatial_parameters = ["point_params", "1.375", "103.39190674"];
     /**
      * Temporal Parameters
      * time_range : [start_time: str, end_time: str] # datetimes in ISO Format structured as list with two elements
@@ -35,7 +35,7 @@ contract SimpleV4ParametricPolygon is ChainlinkClient {
      *
      * Example parameters for summing data over a specific time period
      */
-    string[] temporal_parameters = ["time_range", "2022-09-01", "2022-09-30", "temporal_agg_params", "all", "sum"];
+    string[] temporal_parameters = ["time_range", "2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"];
 
     uint256 public data;
     string public unit;
@@ -59,16 +59,23 @@ contract SimpleV4ParametricPolygon is ChainlinkClient {
      * @dev Callback function for chainlink oracle requests
      * numberical results multiplied by 1e18 and cast to integer
      */
-    function fulfillRequest(bytes32 _requestId, uint256 _result, string memory _unit)
+    function fulfillRequest(bytes32 _requestId,  uint64 _value, string memory _unit)
         public
         recordChainlinkFulfillment(_requestId)
     {
         uint someThreshold;
-        data = _result;
+        data = uint256(_value);
         unit = _unit;
         if (data > someThreshold) {
             doSomething();
         }
+    }
+
+    function resetData()
+        public
+    {
+        data = 0;
+        unit = "";
     }
 
     // do something with the parametric result

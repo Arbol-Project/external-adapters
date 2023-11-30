@@ -16,10 +16,10 @@ observationSource = """
     
     decode_log -> decode_cbor -> api_adapter
 
-    unit_parse   [type=jsonparse path="result,unit" data="$(api_adapter)"]
     data_parse   [type=jsonparse path="result,data" data="$(api_adapter)"]
+    unit_parse   [type=jsonparse path="result,unit" data="$(api_adapter)"]
 
-    encode_data  [type=ethabiencode abi="(bytes32 requestId, uint256 value, string unit)" data="{ \\"requestId\\": $(decode_log.requestId), \\"value\\": $(data_parse), \\"unit\\": $(unit_parse) }"]
+    encode_data  [type=ethabiencode abi="(bytes32 requestId, uint64 _value, string _unit)" data="{ \\"requestId\\": $(decode_log.requestId), \\"_value\\": $(data_parse), \\"_unit\\": $(unit_parse) }"]
     encode_tx    [type=ethabiencode
                   abi="fulfillOracleRequest2(bytes32 requestId, uint256 payment, address callbackAddress, bytes4 callbackFunctionId, uint256 expiration, bytes calldata data)"
                   data="{\\"requestId\\": $(decode_log.requestId), \\"payment\\": $(decode_log.payment), \\"callbackAddress\\": $(decode_log.callbackAddr), \\"callbackFunctionId\\": $(decode_log.callbackFunctionId), \\"expiration\\": $(decode_log.cancelExpiration), \\"data\\": $(encode_data)}"
