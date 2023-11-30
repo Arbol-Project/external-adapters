@@ -13,7 +13,7 @@ contract SimpleV4ParametricMumbai is ChainlinkClient {
     bytes32 constant CHAINLINK_JOB_ID = "b886eeae31f746ac898c5b568a9a5503"; // <- Mumbai, Polygon -> "7678aeaa5bfa4811b0a16b5a6f05069a"
 
     // v4 geotemporal query for rainfall data outputted to an array
-    string request_URL = "/geo_temporal_query/chirpsc_final_25-daily?output_format=array";
+    string request_URL = "/apiv4/geo_temporal_query/chirpsc_final_25-daily?output_format=array";
     /**
      * Spatial Parameters
      * point_params : (lat: float, lon: float)
