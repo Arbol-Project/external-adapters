@@ -7,6 +7,7 @@ import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 contract SimpleV4ParametricMumbai is ChainlinkClient {
     using Chainlink for Chainlink.Request;
 
+    // IMPORTANT: after deploying, must send required oracle payment to this example contract before calling sendRequest()
     uint256 private constant ORACLE_PAYMENT = 1 * 10**10; // 0.00000001 LINK
     address constant LINK_ADDRESS = 0x326C977E6efc84E512bB9C30f76E30c160eD06FB; // <- Mumbai, Polygon -> 0xb0897686c545045aFc77CF20eC7A532E3120E0F1
     address constant CHAINLINK_OPERATOR_ADDRESS = 0x59FA4e3Fd486E5798C8F8d884f0F65A51A5dFF43; // <- Mumbai, Polygon -> 0x2621E9C0bc1975E74Ec465DF7357607E617C7FF9
