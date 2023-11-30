@@ -2,7 +2,7 @@
 
 Chainlink external adapters for accessing dClimate weather data on IPFS for smart parametric coverage solutions.
 
-- [Weather Metrics Reporting](https://github.com/Arbol-Project/external-adapters/blob/main/adapter/api.py) (dClimate-apiv4)
+- [Weather Metrics Reporting](https://github.com/Arbol-Project/external-adapters/blob/main/jobs/dclimate-apiv4-polygon.toml) (dClimate-apiv4)
     - This Chainlink job allows a user to make a request for V4 geotemporal dClimate weather data on IPFS and return a desired aggregate numerical metric and associated unit.
     - Configs
         - Polygon: 
