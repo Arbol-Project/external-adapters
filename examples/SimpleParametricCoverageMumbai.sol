@@ -33,9 +33,9 @@ contract SimpleV4ParametricMumbai is ChainlinkClient {
      * temporal_agg_params : (time_period: str, agg_method: str, time_unit: int)
      * rolling_agg_params : (window_size: int, agg_method: str)
      *
-     * Example parameters for summing data over a specific time period
+     * Example parameters for getting the max value in a specific time period
      */
-    string[] temporal_parameters = ["time_range", "2022-09-01", "2022-09-30", "temporal_agg_params", "all", "sum"];
+    string[] temporal_parameters = ["time_range", "2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"];
 
     uint256 public data;
     string public unit;
