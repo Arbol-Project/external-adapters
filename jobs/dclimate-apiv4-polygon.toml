@@ -16,8 +16,8 @@ observationSource = """
     
     decode_log -> decode_cbor -> api_adapter
 
-    data_parse   [type=jsonparse path="result,data" data="$(api_adapter)"]
     unit_parse   [type=jsonparse path="result,unit" data="$(api_adapter)"]
+    data_parse   [type=jsonparse path="result,data" data="$(api_adapter)"]
 
     encode_data  [type=ethabiencode abi="(bytes32 requestId, uint64 _value, string _unit)" data="{ \\"requestId\\": $(decode_log.requestId), \\"_value\\": $(data_parse), \\"_unit\\": $(unit_parse) }"]
     encode_tx    [type=ethabiencode
