@@ -1,4 +1,4 @@
-# Chainlink Jobs
+# Arbol External Adapters
 
 Chainlink external adapters for accessing dClimate weather data on IPFS for smart parametric coverage solutions.
 
