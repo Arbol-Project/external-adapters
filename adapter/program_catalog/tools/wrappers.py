@@ -1,3 +1,4 @@
+import os
 import io
 import json
 import re
@@ -15,139 +16,309 @@ import time
 PRECISION = 1e18
 
 '''
-n.b. - making change to schema at drought_monitoring ({state}-{county} changed to {state}_{county} as elsewhere),
-     the importance being that it is now assumed that '-' is not a separating character for parameters in a request URL
-
-not implemented
+UNSUPPORTED API ENDPOINTS:
 
 ceda-biomass
+cme-futures/stations
+drought-monitor
+irrigation_splits
+metadata
 rma-code-lookups/valid_counties
 rma-code-lookups/valid_states
 transitional_yield/valid_commodities
+transitional_yield
+user/get_token
 yield/valid_commodities
-get_csv_station_history
-get_hourly_station_history
+yield
 '''
 
+
+# def convert_quantity(quant):
+#     return None if quant is None else str(quant)
+
+
+def get_australia_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit"
+
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities (or strs in the case of GUSTDIR) as values
+            string unit
+    '''
+    default_args = {"dataset": "bom_australia_stations-daily", "desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data, unit = v3_client.get_australia_station_history(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
+
+
 # def get_ceda_biomass_wrapper(args):
-#     ''' Returns dict with BytesIO data '''
+#     ''' Returns dict with BytesIO "data" 
+    
+#         wrapped function returns:
+#             BytesIO representing relevant GeoTiff File
+#     '''
+#     default_args = {"ipfs_timeout": None}
+#     default_args.update(args)
 #     data = v3_client.get_ceda_biomass(**args)
 #     return data
 
 
-def get_forecasts_wrapper(args):
-    ''' Returns dict with pd.Series data and units '''
-    default_args = {"also_return_metadata": False, "also_return_snapped_coordinates": True, "use_imperial_units": True, "desired_units": None, "ipfs_timeout": None, "convert_to_local_time": True}
+def get_cme_station_futures_wrapper(args):
+    ''' Returns dict with pd.Series "data" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and forecast data as values
+    '''
+    default_args = {"dataset": "cme_futures-daily", "desired_units": None, "ipfs_timeout": None}
     default_args.update(args)
-    data = v3_client.get_forecast(**default_args)
-    return data
-
-
-# def get_drought_monitor_history_wrapper(args):
-#     ''' Returns dict with pd.Series data '''
-#     data = v3_client.get_drought_monitor_history(**args)
-#     return data
+    if default_args.get("forecast_date", None) is None:
+        most_recent_metadata = v3_client.get_metadata(v3_client.get_heads()["cme_futures-daily"])
+        forecast_date = datetime.datetime.strptime(most_recent_metadata["date range"][0], '%Y-%m-%d').date()
+        default_args["forecast_date"] = forecast_date
+    data = v3_client.get_station_forecast_history(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data}
 
  
 def get_cme_station_history_wrapper(args):
-    ''' Returns dict with pd.Series data and units '''
+    ''' Returns dict with pd.Series "data" and string "unit" 
+
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities
+            string unit
+    '''
     default_args = {"desired_units": None, "ipfs_timeout": None}
     default_args.update(args)
-    data = v3_client.get_cme_station_history(**default_args)
-    return data
-
-
-def get_dutch_station_history_wrapper(args):
-    ''' Returns dict with pd.Series data and units '''
-    default_args = {"dataset": "dutch_stations-daily", "desired_units": None, "ipfs_timeout": None}
-    default_args.update(args)
-    data = v3_client.get_european_station_history(**default_args)
-    data['data'] = pd.Series(data['data'])
+    data, unit = v3_client.get_cme_station_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
     if data.empty:
         raise ValueError('No data returned for request')
-    data['data'] = data['data'].set_axis(pd.to_datetime(data['data'].index)).sort_index()
-    return data
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
+
+
+def get_cwv_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" 
+    
+        wrapped function returns:
+            dict with datetime keys and cwv Quantities as values
+    '''
+    default_args = {"desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    # CWV is a proprietary unscaled unit from the UK National Grid
+    data = v3_client.get_cwv_station_history(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data}
+
+
+# def get_drought_monitor_history_wrapper(args):
+#     ''' Returns dict with pd.Series "data" 
+
+#         wrapped function returns:
+#             string containing drought monitor data in csv format
+#     '''
+#     default_args = {"ipfs_timeout": None}
+#     default_args.update(args)
+#     data = v3_client.get_drought_monitor_history(**args)
+#     return {"data": data}
+    
+
+def get_dutch_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities as values
+            string unit
+    '''
+    default_args = {"dataset": "dutch_stations-daily", "desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data, unit = v3_client.get_european_station_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
+
+
+def get_eaufrance_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and flowrates as values
+            string unit
+    '''
+    default_args = {"desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data, unit = v3_client.get_eaufrance_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
+
+
+def get_forecasts_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with pd.Series keys and and values
+            string unit
+    '''
+    default_args = {"also_return_metadata": False, "also_return_snapped_coordinates": True, "use_imperial_units": True, "desired_units": None, "ipfs_timeout": None, "convert_to_local_time": True}
+    default_args.update(args)
+    data, unit = v3_client.get_forecast(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    # data = data.set_axis(pd.to_datetime(data.index, utc=True)).sort_index()
+    return {"data": data, "unit": unit}
 
 
 def get_german_station_history_wrapper(args):
-    ''' Returns dict with pd.Series data and units '''
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities as values
+            string unit
+    '''
     default_args = {"dataset": "dwd_stations-daily", "desired_units": None, "ipfs_timeout": None}
     default_args.update(args)
-    data = v3_client.get_european_station_history(**default_args)
-    data['data'] = pd.Series(data['data'])
+    data, unit = v3_client.get_european_station_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
     if data.empty:
         raise ValueError('No data returned for request')
-    data['data'] = data['data'].set_axis(pd.to_datetime(data['data'].index)).sort_index()
-    return data
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
 
 
-def get_japan_station_history_wrapper(args):
-    ''' Returns dict with pd.Series data and units '''
-    default_args = {"ipfs_timeout": None}
+def get_german_hourly_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime keys and weather variable Quantities as values
+            string unit
+    '''
+    default_args = {"dataset": "dwd_hourly-hourly", "desired_units": None, "ipfs_timeout": None}
     default_args.update(args)
-    data = v3_client.get_japan_station_history(**default_args)
-    return data
+    data, unit = v3_client.get_hourly_station_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
 
 
-# def get_tropical_storms_wrapper(args):
-#     ''' Returns dict with pd.DataFrame data '''
-#     data = v3_client.get_tropical_storms(**args)
-#     return data
+def get_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities as values
+            string unit
+    '''
+    default_args = {"desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data, unit = v3_client.get_station_history(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
+
+
+def get_ghisd_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities as values
+            string unit
+    '''
+    default_args = {"dataset": "ghisd-sub_hourly", "use_imperial_units": True, "desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data, unit = v3_client.get_hourly_station_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
+
+
+def get_gridcell_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit"
+     
+        wrapped function returns:
+            dict with datetime/datetime.date keys and climate values
+            string unit  
+    '''
+    default_args = {"also_return_metadata": False, "also_return_snapped_coordinates": False, "use_imperial_units": True, "desired_units": None, "ipfs_timeout": None, "as_of": None, "convert_to_local_time": True}
+    default_args.update(args)
+    data, unit = v3_client.get_gridcell_history(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index, utc=True)).sort_index()
+    return {"data": data, "unit": unit}
+
+
+def get_inmet_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities as values
+            string unit
+    '''
+    default_args = {"dataset": "inmet_brazil-hourly", "desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data, unit = v3_client.get_csv_station_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
 
 
 # def get_irrigation_data_wrapper(args):
-#     ''' Returns dict with pd.DataFrame data '''
+#     ''' Returns dict with pd.DataFrame data 
+    
+#         wrapped function returns:
+#             string containing irrigation data for commodity in csv format
+#     '''
 #     default_args = {"ipfs_timeout": None}
 #     default_args.update(args)
 #     data = v3_client.get_irrigation_data(**default_args)
 #     return data
 
 
-# def get_transitional_yield_history_wrapper(args):
-#     ''' Returns dict with pd.DataFrame data '''
-#     if args.get('impute', False):
-#         args['dataset'] = 'rma_t_yield_imputed-single-value'
-#     else:
-#         args['dataset'] = 'rma_t_yield-single-value'
-#     default_args = {"impute": False}
-#     default_args.update(args)
-#     data = v3_client.get_yield_history(**default_args)
-#     return data
-
-
-# def get_yield_history_wrapper(args):
-#     ''' Returns dict with pd.DataFrame data '''
-#     if args.get('impute', False):
-#         args['dataset'] = 'rmasco_imputed-yearly'
-#     elif args.get('fill', False):
-#         args['dataset'] = 'sco_vhi_imputed-yearly'
-#     else:
-#         args['dataset'] = 'sco-yearly'
-#     default_args = {"impute": False, "fill": False}
-#     default_args.update(args)
-#     data = v3_client.get_yield_history(**default_args)
-#     return data
-
-
-def get_station_history_wrapper(args):
-    ''' Returns dict with pd.Series data and units '''
-    default_args = {"dataset": "ghcnd", "station_id": "USW00003016", "use_imperial_units": True, "desired_units": None, "ipfs_timeout": None}
+def get_japan_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime keys and temperature Quantities as values\
+            string unit
+    '''
+    default_args = {"ipfs_timeout": None}
     default_args.update(args)
-    data = v3_client.get_station_history(**default_args)
-    data['data'] = pd.Series(data['data'])
+    data, unit = v3_client.get_japan_station_history(**default_args)
+    data = pd.Series(data)
     if data.empty:
         raise ValueError('No data returned for request')
-    data['data'] = data['data'].set_axis(pd.to_datetime(data['data'].index)).sort_index()
-    return data
-
-
-def get_gridcell_history_wrapper(args):
-    ''' Returns dict with pd.Series data and units '''
-    default_args = {"also_return_metadata": False, "also_return_snapped_coordinates": True, "use_imperial_units": True, "desired_units": None, "ipfs_timeout": None, "as_of": None, "convert_to_local_time": True}
-    default_args.update(args)
-    data = v3_client.get_gridcell_history(**default_args)
-    data['data'] = data['data'].set_axis(pd.to_datetime(data['data'].index, utc=True)).sort_index()
-    return data
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
 
 
 # def get_metadata_wrapper(args):
@@ -176,54 +347,108 @@ def get_gridcell_history_wrapper(args):
 #     return metadata
 
 
-def get_api_mapping(file_path):
-    client_wrapper = {
-        # 'geo_temporal_query': geo_temporal_query_wrapper,
-        # 'ceda-biomass': get_ceda_biomass_wrapper,
-        'cme-history': get_cme_station_history_wrapper,
-        # 'drought-monitor': get_drought_monitor_history_wrapper,
-        'dutch-station-history': get_dutch_station_history_wrapper,
-        'forecasts': get_forecasts_wrapper,
-        'german-station-history': get_german_station_history_wrapper,
-        'ghcn-history': get_station_history_wrapper,
-        'grid-history': get_gridcell_history_wrapper,
-        # 'irrigation_splits': get_irrigation_data_wrapper,
-        # 'metadata': get_metadata_wrapper,
-        # 'storms': get_tropical_storms_wrapper,
-        # 'transitional_yield': get_transitional_yield_history_wrapper,
-        # 'yield': get_yield_history_wrapper,
-        'japan-station-history': get_japan_station_history_wrapper
-    }
-    with open(file_path, 'r') as swagger:
-        api = json.load(swagger)
-        swagger.close()
-
-    # parse swagger and get parameters and url endpoints
-    api_map = {'basePath': api['basePath'] + '/', 'paths': {}}
-    for path in api['paths'].keys():
-        if 'user' in path or 'valid' in path or 'biomass' in path:
-            continue
-        key = path[:path.find('/{')][1:] if '/{' in path else path[1:]
-        if not key in client_wrapper:
-            continue
-        types = {}
-        primary = re.findall(r'(?<=\{).+?(?=\})', path) if '/{' in path else []
-        secondary = []
-        for param in api['paths'][path].get('parameters', []):
-            types[param['name']] = param['type']
-        for param in api['paths'][path].get('get', {}).get('parameters', []):
-            if param['name'] != 'Authorization':
-                secondary.append(param['name'])
-                types[param['name']] = param['type']
-        api_map['paths'][key] = {'name': path, 'primary': primary, 'secondary': secondary, 'types': types, 'function': client_wrapper[key]}
-    return api_map
-
-API_MAP = get_api_mapping('swagger.json')
+def get_power_history_wrapper(args):
+    ''' Returns dict with pd.Series "data" and string "unit" 
+    
+        wrapped function returns:
+            dict with datetime.date keys and weather variable Quantities as values
+            string unit
+    '''
+    default_args = {"dataset": "ne_iso-hourly", "station_id": "NEW_ENGLAND", "weather_variable": "RTDMND", "desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data, unit = v3_client.get_csv_station_history(**default_args)
+    # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data, "unit": unit}
 
 
-#  section for zarr based geotemporal queries
+def get_tropical_storms_wrapper(args):
+    ''' Returns dict with pd.DataFrame "data"
+    
+        wrapped function returns:
+            pd.DataFrame containing time series information on tropical storms
+    '''
+    default_args = {"ipfs_timeout": None}
+    default_args.update(args)
+    data = v3_client.get_tropical_storms(**args)
+    return {"data": data}
+
+
+def get_teleconnections_history_wrapper(args):
+    ''' Returns dict with pd.Series "data"
+    
+        wrapped function returns:
+            dict with datetime.date keys and teleconnection index Quantities as values
+    '''
+    default_args = {"desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data = v3_client.get_teleconnections_history(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data}
+
+
+# def get_transitional_yield_history_wrapper(args):
+#     ''' Returns dict with pd.DataFrame "data" 
+    
+#         wrapped function returns:
+#             string containing yield data in csv format
+#     '''
+#     if args.get('impute', False):
+#         args['dataset'] = 'rma_t_yield_imputed-single-value'
+#     else:
+#         args['dataset'] = 'rma_t_yield-single-value'
+#     default_args = {"impute": False}
+#     default_args.update(args)
+#     data = v3_client.get_yield_history(**default_args)
+#     return data
+
+
+def get_sap_station_history_wrapper(args):
+    ''' Returns dict with pd.Series "data"
+    
+        wrapped function returns:
+            dict with datetime keys and sap Quantities as values
+    '''
+    default_args = {"desired_units": None, "ipfs_timeout": None}
+    default_args.update(args)
+    data = v3_client.get_sap_station_history(**default_args)
+    data = pd.Series(data)
+    if data.empty:
+        raise ValueError('No data returned for request')
+    data = data.set_axis(pd.to_datetime(data.index)).sort_index()
+    return {"data": data}
+
+
+# def get_yield_history_wrapper(args):
+#     ''' Returns dict with pd.DataFrame "data" 
+    
+#         wrapped function returns:
+#             string containing yield data in csv format
+#     '''
+#     if args.get('impute', False):
+#         args['dataset'] = 'rmasco_imputed-yearly'
+#     elif args.get('fill', False):
+#         args['dataset'] = 'sco_vhi_imputed-yearly'
+#     else:
+#         args['dataset'] = 'sco-yearly'
+#     default_args = {"impute": False, "fill": False}
+#     default_args.update(args)
+#     data = v3_client.get_yield_history(**default_args)
+#     return data
+
+
 def geo_temporal_query_wrapper(args):
-    ''' Returns dict with pd.Series '''
+    ''' Returns dict with pd.Series 
+    
+        wrapped function returns:
+            numpy array of data values
+    '''
     default_args = {"as_of": None, "point_limit": None}
     default_args.update(args)
     start = time.time()
@@ -239,22 +464,147 @@ def geo_temporal_query_wrapper(args):
         raise ValueError('Request errored')
 
 
-geo_temporal_parameters = {
-    'point_params': (["lat", "lon"], [float, float]),
-    'circle_params': (["center_lat", "center_lon", "radius"], [float, float, float]),
-    'rectangle_params': (["min_lat", "min_lon", "max_lat", "max_lon"], [float, float, float, float]),
-    'polygon_params': (["epsg_crs"], [int]),
-    'multiple_points_params': (["epsg_crs"], [int]),
-    'spatial_agg_params': (["agg_method"], [str]),
-    'time_range': ([], [datetime.fromisoformat, datetime.fromisoformat]),
-    'temporal_agg_params': (["time_period", "agg_method", "time_unit"], [str, str, int]),
-    'rolling_add_params': (["window_size", "agg_method"], [int, str]),
-}
+def get_api_mapping(swagger_dir):
+    supported_client_wrappers = {
+        'australia-station-history': get_australia_station_history_wrapper,
+        # 'ceda-biomass': get_ceda_biomass_wrapper,
+        # 'cme-futures/stations': get_cme_futures_stations_wrapper,
+        'cme-futures': get_cme_station_futures_wrapper,
+        'cme-history': get_cme_station_history_wrapper,
+        'cwv-station-history': get_cwv_station_history_wrapper,
+        # 'drought-monitor': get_drought_monitor_history_wrapper,
+        'dutch-station-history': get_dutch_station_history_wrapper,
+        'eaufrance': get_eaufrance_history_wrapper,
+        'forecasts': get_forecasts_wrapper,
+        'german-station-history': get_german_station_history_wrapper,
+        'german-station-hourly-history': get_german_hourly_station_history_wrapper,
+        'ghcn-history': get_station_history_wrapper,
+        'ghisd-station-history': get_ghisd_station_history_wrapper,
+        'grid-history': get_gridcell_history_wrapper,
+        'inmet': get_inmet_station_history_wrapper,
+        # 'irrigation_splits': get_irrigation_data_wrapper,
+        'japan-station-history': get_japan_station_history_wrapper,
+        # 'metadata': get_metadata_wrapper,
+        'power-history/ne_iso/load': get_power_history_wrapper,
+        # 'rma-code-lookups/valid_counties': get_rma_code_lookups_counties_wrapper,
+        # 'rma-code-lookups/valid_states': get_rma_code_lookups_states_wrapper,
+        'storms': get_tropical_storms_wrapper,
+        'teleconnections': get_teleconnections_history_wrapper,
+        # 'transitional_yield/valid_commodities': get_transitional_yield_commodities_wrapper,
+        # 'transitional_yield': get_transitional_yield_history_wrapper,
+        'uk-national-grid/sap': get_sap_station_history_wrapper,
+        # 'yield/valid_commodities': get_yield_commodities_wrapper,
+        # 'yield': get_yield_history_wrapper,
+        'geo_temporal_query': geo_temporal_query_wrapper,
+    }
+    api_versions = {}
+    for file in os.listdir(swagger_dir):
+        file_path = os.path.join(swagger_dir, file)
+        with open(file_path, 'r') as swagger:
+            api = json.load(swagger)
+            swagger.close()
+        # parse swagger and get parameters and url endpoints
+        api_map = {'basePath': api['basePath'] + '/', 'paths': {}}
+        for path in api['paths'].keys():
+            if 'user' in path or 'valid' in path or 'biomass' in path:
+                continue
+            key = path[:path.find('/{')][1:] if '/{' in path else path[1:]
+            if not key in supported_client_wrappers:
+                continue
+            types = {}
+            primary = re.findall(r'(?<=\{).+?(?=\})', path) if '/{' in path else []
+            secondary = []
+            for param in api['paths'][path].get('parameters', []):
+                types[param['name']] = param['type']
+            for param in api['paths'][path].get('get', {}).get('parameters', []):
+                if param['name'] != 'Authorization':
+                    secondary.append(param['name'])
+                    types[param['name']] = param['type']
+            api_map['paths'][key] = {'name': path, 'primary': primary, 'secondary': secondary, 'types': types, 'function': supported_client_wrappers[key]}
+        api_versions[api['basePath']] = api_map
+    
+    return api_versions
 
 
-def parse_zarr_request(data, req):
+def parse_v3_request(data, req, map):
+    # get endpoint
+    request_parsed = list(urlparse(data))
+    print(f'request_parsed: {request_parsed}')
+    request_paths = request_parsed[2].split('/')
+    print(f'request_paths: {request_paths}')
+    key = request_paths[1]
+    if key == 'drought-monitor':
+        print('replacing "-" separator with "_" in drought-monitor parameters')
+        request_paths[1] = request_paths[1].replace('-', '_')
+        print(f'new request_paths: {request_paths}')
+    api_endpoint = map['paths'].get(key, None)
+    if api_endpoint is None:
+        print(f'api_endpoint not found for key {key} and map {list(map["paths"].keys())}')
+        return 'Improperly formatted request URL, endpoint not found', False, None, []
+
+    # get primary parameters
+    args = {}
+    endpoint_primaries = api_endpoint['primary']
+    endpoint_secondaries = api_endpoint['secondary']
+    if 'dataset' in endpoint_primaries:
+        params = [request_paths[1]]
+        for req in request_paths[2:]:
+            params += req.split('_')
+    else:
+        params = re.split('_|/', request_parsed[2])[2:]
+    if request_parsed[4] == '':
+        queries = []
+    else:
+        queries = request_parsed[4].split('&')
+    if len(params) != len(endpoint_primaries):
+        print(f'params: {params}, endpoint_primaries: {endpoint_primaries}')
+        return 'Improperly formatted request URL, incompatible parameters', False, None, []
+
+    # cast floats and set primary args
+    floats = ['lat', 'lon', 'radius', 'max_lat', 'max_lon', 'min_lat', 'min_lon']
+    for i in range(len(endpoint_primaries)):
+        param = endpoint_primaries[i]
+        if param in floats:
+            args[param] = float(params[i])
+        else:
+            args[param] = params[i]
+
+    # parse secondary parameters
+    for j in range(len(queries)):
+        param = queries[j][:queries[j].find('=')]
+        value = queries[j][queries[j].find('='):][1:]
+        param_type = map['paths'][key]['types'][param]
+        if not param in endpoint_secondaries:
+            return 'Improperly formatted request URL, incompatible parameters', False, None, []
+
+        # type check parameters and set secondary args
+        if param in floats:
+            args[param] = float(params[i])
+        if param_type != 'string':
+            if param_type == 'boolean':
+                value = value.capitalize()
+            value = ast.literal_eval(value)
+        args[param] = value
+    args['_key'] = key
+    return args, True, req.get('request_ops', None), req.get('request_params', [])
+
+
+def parse_v4_request(data, req, map):
+    geo_temporal_parameters = {
+        'point_params': (["lat", "lon"], [float, float]),
+        'circle_params': (["center_lat", "center_lon", "radius"], [float, float, float]),
+        'rectangle_params': (["min_lat", "min_lon", "max_lat", "max_lon"], [float, float, float, float]),
+        'polygon_params': (["epsg_crs"], [int]),
+        'multiple_points_params': (["epsg_crs"], [int]),
+        'spatial_agg_params': (["agg_method"], [str]),
+        'time_range': ([], [datetime.fromisoformat, datetime.fromisoformat]),
+        'temporal_agg_params': (["time_period", "agg_method", "time_unit"], [str, str, int]),
+        'rolling_add_params': (["window_size", "agg_method"], [int, str]),
+    }
     request_data = list(urlparse(data))
+    print(f'request_data: {request_data}')
     request_paths = request_data[2].split('/')
+    print(f'request_paths: {request_paths}')
     key = request_paths[1]
     dataset_name = request_paths[2]
     if request_data[4] != '':
@@ -293,81 +643,30 @@ def parse_zarr_request(data, req):
     return args, True, None, []
 
 
+API_MAPS = get_api_mapping('./swaggers')
+
+
 def parse_request(data, req):
+    parsers = {
+        "/apiv3": parse_v3_request,
+        "/apiv4": parse_v4_request,
+    }
     # check basePath version
-    v3_base_path = API_MAP['basePath']
-    if not data.startswith(v3_base_path):
-        v4_base_path = "/apiv4"
-        if data.startswith(v4_base_path):
-            return parse_zarr_request(data.removeprefix(v4_base_path), req)
-        else:
-            return f'Incompatible API version, please use {v3_base_path} or {v4_base_path}', False, None, []
-        
-    request_data = data.removeprefix(v3_base_path)
-
-    # get endpoint
-    request_parsed = list(urlparse(request_data))
-    request_paths = request_parsed[2].split('/')
-    key = request_paths[0]
-    api_endpoint = API_MAP['paths'].get(key, None)
-    if api_endpoint is None:
-        return 'Improperly formatted request URL, endpoint not found', False, None, []
-
-    # get primary parameters
-    args = {}
-    endpoint_primaries = api_endpoint['primary']
-    endpoint_secondaries = api_endpoint['secondary']
-    if 'dataset' in endpoint_primaries:
-        params = [request_paths[1]]
-        for req in request_paths[2:]:
-            params += req.split('_')
-    else:
-        params = re.split('_|/', request_parsed[2])[1:]
-    if request_parsed[4] == '':
-        queries = []
-    else:
-        queries = request_parsed[4].split('&')
-    if len(params) != len(endpoint_primaries):
-        return 'Improperly formatted request URL, incompatible parameters', False, None, []
-
-    # cast floats and set primary args
-    floats = ['lat', 'lon', 'radius', 'max_lat', 'max_lon', 'min_lat', 'min_lon']
-    for i in range(len(endpoint_primaries)):
-        param = endpoint_primaries[i]
-        if param in floats:
-            args[param] = float(params[i])
-        else:
-            args[param] = params[i]
-
-    # parse secondary parameters
-    for j in range(len(queries)):
-        param = queries[j][:queries[j].find('=')]
-        value = queries[j][queries[j].find('='):][1:]
-        param_type = API_MAP['paths'][key]['types'][param]
-        if not param in endpoint_secondaries:
-            return 'Improperly formatted request URL, incompatible parameters', False, None, []
-
-        # type check parameters and set secondary args
-        if param in floats:
-            args[param] = float(params[i])
-        if param_type != 'string':
-            if param_type == 'boolean':
-                value = value.capitalize()
-            value = ast.literal_eval(value)
-        args[param] = value
-    args['_key'] = key
-    return args, True, req.get('request_ops', None), req.get('request_params', [])
+    for base_path in API_MAPS.keys():
+        if data.startswith(base_path):
+            return parsers[base_path](data.removeprefix(base_path), req, API_MAPS[base_path])
 
 
 def get_request_data(args):
     key = args.pop('_key')
-    if key == "geo_temporal_query":
-        return geo_temporal_query_wrapper(args)
-    api_endpoint = API_MAP['paths'].get(key, None)
-    data = api_endpoint['function'](args)
-    if "unit" not in data:
-        data["unit"] = None
-    return data
+    for base_path in API_MAPS.keys():
+        if key in API_MAPS[base_path]['paths'].keys():
+            api_endpoint = API_MAPS[base_path]['paths'][key]
+            data = api_endpoint['function'](args)
+            if "unit" not in data:
+                data["unit"] = None
+            return data
+    raise ValueError('Request not supported')
 
 
 def operate_on_data(data, ops, args):

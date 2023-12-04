@@ -1,0 +1,3212 @@
+{
+    "swagger": "2.0",
+    "basePath": "/apiv3",
+    "paths": {
+        "/australia-station-history/{station_name}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "TMAX",
+                        "TMIN",
+                        "PRCP",
+                        "GUSTSPEED",
+                        "GUSTDIR"
+                    ],
+                    "in": "path",
+                    "description": null,
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "Adelaide_Airport",
+                        "Adelaide_West_Terrace___ngayirdapira",
+                        "Adele_Island",
+                        "Aireys_Inlet",
+                        "Albany_Airport",
+                        "Albion_Park",
+                        "Albury",
+                        "Alice_Springs_Airport",
+                        "Alva_Beach",
+                        "Amberley",
+                        "Applethorpe",
+                        "Archerfield",
+                        "Argyle",
+                        "Arlington_Reef",
+                        "Armidale_Airport",
+                        "Avalon",
+                        "Ayr",
+                        "Badgerys_Creek",
+                        "Badgingarra",
+                        "Bairnsdale",
+                        "Ballarat",
+                        "Ballera",
+                        "Ballina",
+                        "Bankstown",
+                        "Barrow_Island",
+                        "Batchelor",
+                        "Bathurst_Airport",
+                        "Beaudesert_AWS",
+                        "Bedout_Island",
+                        "Beerburrum",
+                        "Bega",
+                        "Bellambi",
+                        "Ben_Nevis",
+                        "Bendigo",
+                        "Bickley",
+                        "Biloela",
+                        "Birdsville",
+                        "Blackall",
+                        "Blackwater_Airport",
+                        "Bombala_AWS",
+                        "Borroloola",
+                        "Borrona_Downs",
+                        "Bourke",
+                        "Bowen_Airport_AWS",
+                        "Bradshaw",
+                        "BradshawAngallari_Valley_Defence",
+                        "BradshawKoolendong_Valley",
+                        "Braidwood",
+                        "Brewon",
+                        "Bridgetown",
+                        "Brisbane",
+                        "Brisbane_Airport",
+                        "Broken_Hill_Airport",
+                        "Broome",
+                        "Bulman",
+                        "Bunbury",
+                        "Bundaberg",
+                        "Burketown_Airport",
+                        "Bushy_Park",
+                        "Busselton_Airport",
+                        "Busselton_Jetty",
+                        "Butlers_Gorge",
+                        "Cabramurra",
+                        "Cairns",
+                        "Cairns_Racecourse",
+                        "Camden",
+                        "Camooweal",
+                        "Campania",
+                        "Campbelltown",
+                        "Canberra",
+                        "Canterbury",
+                        "Canungra_Defence",
+                        "Cape_Borda",
+                        "Cape_Bruny_AWS",
+                        "Cape_Byron",
+                        "Cape_Flattery",
+                        "Cape_Grim",
+                        "Cape_Jaffa",
+                        "Cape_Leeuwin",
+                        "Cape_Moreton",
+                        "Cape_Naturaliste",
+                        "Cape_Nelson",
+                        "Cape_Otway",
+                        "Cape_Sorell",
+                        "Cape_Wessel",
+                        "Cape_Willoughby",
+                        "Carnarvon",
+                        "Carters_Bore",
+                        "Casino",
+                        "Casterton",
+                        "Ceduna",
+                        "Central_Arnhem_Plateau",
+                        "Centre_Island",
+                        "Century_Mine",
+                        "Cerberus",
+                        "Cessnock_Airport",
+                        "Charleville",
+                        "Charlton",
+                        "Christmas_Island",
+                        "Clare",
+                        "Clermont_Airport",
+                        "Cleve_Airport",
+                        "Cloncurry",
+                        "Cobar",
+                        "Cobar_Airport",
+                        "Coconut_Island",
+                        "Cocos_Island",
+                        "Coen_Airport",
+                        "Coffs_Harbour_Airport",
+                        "Coldstream",
+                        "Collie_East",
+                        "Combienbar",
+                        "Condobolin_Airport",
+                        "Coober_Pedy_Airport",
+                        "Cooktown",
+                        "Coolangatta",
+                        "Cooma_Airport",
+                        "Coonabarabran_Airport",
+                        "Coonamble",
+                        "Coonawarra",
+                        "Cowra",
+                        "Cressy",
+                        "Croker_Island_Airport",
+                        "Cultana_Defence",
+                        "Cummins_Airport",
+                        "Cunderdin_Airport",
+                        "Curtin",
+                        "Dalby",
+                        "Dalwallinu",
+                        "Daly_Waters",
+                        "Dartmoor",
+                        "Darwin_Airport",
+                        "Delamere",
+                        "Delta",
+                        "Deniliquin",
+                        "Dennes_Point",
+                        "Derby",
+                        "Devonport_Airport",
+                        "Double_Island_Point",
+                        "Douglas_River",
+                        "Dubbo",
+                        "Dunalley",
+                        "Dwellingup",
+                        "East_Sale_Airport",
+                        "Edenhope",
+                        "Edinburgh",
+                        "Edithburgh",
+                        "Eildon_Fire_Tower",
+                        "Emerald",
+                        "ErnabellaPukatja",
+                        "Esperance",
+                        "Esperance_Airport",
+                        "Essendon_Airport",
+                        "Evans_Head",
+                        "Falls_Creek",
+                        "Fawkner_Beacon",
+                        "Ferny_Creek",
+                        "Fitzroy_Crossing",
+                        "Flinders_Island_Airport",
+                        "Flinders_Reef",
+                        "Forbes",
+                        "Forrest",
+                        "Fowlers_Gap",
+                        "Frankston_Ballam_Park",
+                        "Frankston_Beach",
+                        "Frederick_Reef",
+                        "Friendly_Beaches",
+                        "Gabo_Island",
+                        "Garden_Island",
+                        "Gayndah",
+                        "Geelong_Racecourse",
+                        "Gelantipy",
+                        "Georgetown_Airport",
+                        "Geraldton_Airport",
+                        "Giles",
+                        "Gingin_Airport",
+                        "Girilambone",
+                        "Gladstone",
+                        "Gladstone_Airport",
+                        "Glen_Innes_Airport",
+                        "Gold_Coast_Seaway",
+                        "Gooseberry_Hill",
+                        "Gosford",
+                        "Goulburn_Airport",
+                        "Gove_Airport",
+                        "Grafton_AgRS",
+                        "Grafton_Airport",
+                        "Green_Cape",
+                        "Griffith",
+                        "Groote_Eylandt_Airport",
+                        "Grove",
+                        "Gunnedah_Airport",
+                        "Gympie",
+                        "Halls_Creek",
+                        "Hamilton",
+                        "Hamilton_Island",
+                        "Hartz_Mountains",
+                        "Hay_Airport",
+                        "Heron_Island",
+                        "Hervey_Bay",
+                        "Hindmarsh_Island",
+                        "Hobart",
+                        "Hobart_Airport",
+                        "Hogan_Island",
+                        "Holmes_Reef",
+                        "Holsworthy",
+                        "Holsworthy_Defence",
+                        "Hopetoun_Airport",
+                        "Hopetoun_North",
+                        "Horn_Island",
+                        "Horsham",
+                        "Horsley_Park",
+                        "Hughenden",
+                        "Hunters_Hill",
+                        "Inner_Beacon",
+                        "Innisfail_Aero",
+                        "Inverell_RS",
+                        "Ivanhoe_Airport",
+                        "Jabiru",
+                        "Jacup",
+                        "Jandakot",
+                        "Jervis_Bay_Airfield",
+                        "Jervois",
+                        "Julia_Creek",
+                        "Kadina",
+                        "KalgoorlieBoulder",
+                        "Kalumburu",
+                        "Kanagulk",
+                        "Kangaroo_Flats_Defence",
+                        "Kapooka_Defence",
+                        "Karijini_North",
+                        "Karratha",
+                        "Katanning_RS",
+                        "Keith_West",
+                        "Kempsey_Airport",
+                        "Khancoban",
+                        "Kiama",
+                        "Kilmore_Gap",
+                        "King_Island_Airport",
+                        "Kingaroy",
+                        "Kingscote",
+                        "Kowanyama",
+                        "Kuitpo",
+                        "Kununurra_Airport",
+                        "Kurnell",
+                        "Kyabram",
+                        "Lady_Elliot_Island",
+                        "Lajamanu",
+                        "Lake_Grace",
+                        "Lake_Julius",
+                        "Lake_Macquarie__Cooranbong",
+                        "Lameroo_AWS",
+                        "Lancelin_Defence",
+                        "Larapuna_Eddystone_Point",
+                        "Latrobe_Valley",
+                        "Launceston",
+                        "Launceston_Airport",
+                        "Laverton",
+                        "Learmonth",
+                        "Legendre_Island",
+                        "Leigh_Creek",
+                        "Leinster",
+                        "Leonora_Airport",
+                        "Liawenee",
+                        "Lihou_Reef_Lighthouse",
+                        "Little_Bay",
+                        "Lochington",
+                        "Lockhart_River",
+                        "Longerenong",
+                        "Longreach",
+                        "Lord_Howe_Island",
+                        "Lord_Howe_Island_Windy_Point",
+                        "Low_Head",
+                        "Low_Isles",
+                        "Low_Rocky_Point",
+                        "Loxton",
+                        "Lucinda",
+                        "Luncheon_Hill",
+                        "Maatsuyker_Island",
+                        "Mackay",
+                        "Mackay_Airport",
+                        "Mackay_Racecourse",
+                        "Macquarie_Island",
+                        "Maitland_Airport",
+                        "Mallacoota",
+                        "Mandora",
+                        "Mandurah",
+                        "Mangalore",
+                        "Mangrove_Mountain",
+                        "Maningrida_Airport",
+                        "Manjimup",
+                        "Marble_Bar",
+                        "Mareeba",
+                        "Maria_Island",
+                        "Marrangaroo_Defence",
+                        "Marree_Airport",
+                        "McArthur_River_Mine",
+                        "McCluer_Island",
+                        "Meekatharra",
+                        "Melbourne_Airport",
+                        "Melbourne_Olympic_Park",
+                        "Melville_Water",
+                        "Merimbula",
+                        "Merriwa",
+                        "Middle_Point",
+                        "Mildura",
+                        "Miles",
+                        "Millendon_Swan_Valley",
+                        "Minlaton_Airport",
+                        "Minnipa_RS",
+                        "Montague_Island",
+                        "Moomba_Airport",
+                        "Moorabbin_Airport",
+                        "Moranbah_Airport",
+                        "Morawa_Airport",
+                        "Moree",
+                        "Mornington_Island_Airport",
+                        "Mortlake",
+                        "Moruya_Airport",
+                        "Moss_Vale",
+                        "Mount_Baw_Baw",
+                        "Mount_Boyce",
+                        "Mount_Buller",
+                        "Mount_Bundey_North_Defence",
+                        "Mount_Crawford",
+                        "Mount_Gambier",
+                        "Mount_Gellibrand",
+                        "Mount_Ginini",
+                        "Mount_Hope",
+                        "Mount_Hotham",
+                        "Mount_Hotham_Airport",
+                        "Mount_Isa",
+                        "Mount_Lofty",
+                        "Mount_Magnet_Airport",
+                        "Mount_Moornapa",
+                        "Mount_Nowa_Nowa",
+                        "Mount_Read",
+                        "Mount_Stuart_Defence",
+                        "Mount_William",
+                        "Mudgee",
+                        "Munglinup_West",
+                        "Murganella_Airstrip",
+                        "Murrurundi_Gap",
+                        "Nambour",
+                        "Naracoorte",
+                        "Narrabri",
+                        "Narrandera_Airport",
+                        "Neptune_Island",
+                        "Nerriga",
+                        "New_May_Downs",
+                        "Newcastle_Nobbys",
+                        "Newdegate",
+                        "Newman_Airport",
+                        "Ngukurr_AWS",
+                        "Nhill_Aerodrome",
+                        "Noarlunga",
+                        "Noona",
+                        "Noonamah",
+                        "Norah_Head",
+                        "Norfolk_Island",
+                        "Normanton",
+                        "Norseman_Airport",
+                        "North_Head",
+                        "North_Island",
+                        "Nowra",
+                        "Nullarbor",
+                        "Nuriootpa",
+                        "Oakey",
+                        "Ocean_Reef",
+                        "Omeo",
+                        "Onslow_Airport",
+                        "Oodnadatta",
+                        "Orange_Airport",
+                        "Orbost",
+                        "Ouse",
+                        "Padthaway",
+                        "Pallamana",
+                        "Palmerville",
+                        "Paraburdoo",
+                        "Parafield",
+                        "Parawa_West",
+                        "Parkes_Airport",
+                        "Parndana",
+                        "Pearce",
+                        "Penrith",
+                        "Perisher_Valley",
+                        "Perth",
+                        "Perth_Airport",
+                        "Pirlangimpi",
+                        "Point_Avoid",
+                        "Point_Fawcett",
+                        "Point_Perpendicular",
+                        "Point_Stuart",
+                        "Port_Augusta",
+                        "Port_Fairy",
+                        "Port_Hedland",
+                        "Port_Macquarie_Airport",
+                        "Portland_Airport",
+                        "Pound_Creek",
+                        "Proserpine",
+                        "PuckapunyalLyon_Hill_Defence",
+                        "Puckapunyal_West_Defence",
+                        "Rabbit_Flat",
+                        "Red_Rocks_Point",
+                        "Redcliffe",
+                        "Redesdale",
+                        "Redland_Alexandra_Hills",
+                        "Renmark_Airport",
+                        "Rhyll",
+                        "Richmond",
+                        "Robe_Airport",
+                        "Rockhampton",
+                        "Rocky_Gully_South",
+                        "Roebourne_Airport",
+                        "Rolleston_Airport",
+                        "Roma",
+                        "Roseworthy",
+                        "Rottnest_Island",
+                        "Rowley_Shoals",
+                        "Roxby_Downs",
+                        "Rundle_Island",
+                        "Rutherglen",
+                        "Salmon_Gums_RS",
+                        "Samuel_Hill",
+                        "Scherger",
+                        "Scone_Airport",
+                        "Scoresby",
+                        "Scotts_Peak",
+                        "Scottsdale",
+                        "Sellicks_Hill",
+                        "Shannon",
+                        "Shark_Bay_Airport",
+                        "Sheffield",
+                        "Sheoaks",
+                        "Shepparton",
+                        "Smithton",
+                        "Smithville",
+                        "Snowtown",
+                        "South_Channel_Island",
+                        "South_Johnstone",
+                        "Southern_Cross_Airport",
+                        "St_George",
+                        "St_Helens",
+                        "St_Kilda_Harbour_RMYS",
+                        "St_Lawrence",
+                        "Stawell",
+                        "Stenhouse_Bay",
+                        "Strahan",
+                        "Strathalbyn",
+                        "Sunshine_Coast_Airport",
+                        "Swan_Hill",
+                        "Swan_Island",
+                        "Swanbourne",
+                        "Sydney_Airport",
+                        "Sydney_Harbour",
+                        "Sydney_Olympic_Park",
+                        "Sydney__Observatory_Hill",
+                        "Tamworth_Airport",
+                        "Tarcoola",
+                        "Taree_Airport",
+                        "Tasman_Island",
+                        "Tatura",
+                        "Telfer",
+                        "Temora",
+                        "Tennant_Creek",
+                        "Terrey_Hills",
+                        "Territory_Grape_Farm",
+                        "Tewantin",
+                        "Thargomindah",
+                        "The_Monument",
+                        "Thevenard_Island",
+                        "Thredbo_Top_Station",
+                        "Tibooburra_Airport",
+                        "Tin_Can_Bay_Defence",
+                        "Tindal",
+                        "Tocal",
+                        "Toowoomba",
+                        "Townsville",
+                        "Townsville_Air_Weapons_Range_Defence",
+                        "Townsville__Fanning_River_Defence",
+                        "Trangie",
+                        "Trepell",
+                        "Truscott",
+                        "Tuggeranong",
+                        "Tunnack",
+                        "Ulladulla",
+                        "Urandangi",
+                        "Victoria_River_Downs",
+                        "Viewbank",
+                        "Wadeye_Port_Keats",
+                        "Wagga_Wagga",
+                        "Walgett",
+                        "Walpeup",
+                        "Walpole_North",
+                        "Walungurru_Kintore",
+                        "Wandering",
+                        "Wangaratta",
+                        "Warburto_Point",
+                        "Warracknabeal_Airport",
+                        "Warrnambool",
+                        "Warwick",
+                        "Wattamolla",
+                        "Weipa",
+                        "West_Wyalong",
+                        "Westmere",
+                        "White_Cliffs_AWS",
+                        "Whyalla",
+                        "Wilcannia_Airport",
+                        "Williamtown",
+                        "Willis_Island",
+                        "Wilsons_Promontory",
+                        "Wiluna_Airport",
+                        "Windorah",
+                        "Winton",
+                        "Woolshed",
+                        "Woomera",
+                        "Wudinna_Airport",
+                        "Wynyard",
+                        "Yamba",
+                        "Yampi_Sound_Defence",
+                        "Yanco",
+                        "Yarram_Airport",
+                        "Yarrawonga",
+                        "Yeppoon",
+                        "Young",
+                        "Yulara",
+                        "Yunta",
+                        "kunanyi__Mount_Wellington"
+                    ],
+                    "in": "path",
+                    "description": null,
+                    "name": "station_name",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get Australia Station average temperature data",
+                "operationId": "get Australia station data",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "Australia Station History"
+                ]
+            }
+        },
+        "/ceda-biomass/{year}/{lat}_{lon}/{unit}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "AGB",
+                        "AGB_SD"
+                    ],
+                    "in": "path",
+                    "description": "'AGB' (above-ground biomass) or 'AGB_SD' (above-ground biomass + standing dead)",
+                    "name": "unit",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "Longitude for west boundary of desired square. Should be multiple of 10 between -180 and 180",
+                    "name": "lon",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "Latitude for north boundary of desired square. Should be multiple of 10 between -40 and 80",
+                    "name": "lat",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "2010",
+                        "2017",
+                        "2018",
+                        "2018-2010",
+                        "2018-2017"
+                    ],
+                    "in": "path",
+                    "description": "Year or year difference for which to get data",
+                    "name": "year",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "GeoTiff file with biomass data for parameters"
+                    },
+                    "404": {
+                        "description": "Invalid paramaters with which to get biomass data"
+                    }
+                },
+                "summary": "GeoTiff file with biomass data for parameters",
+                "description": "Note that lat/lons for squares entirely over water will yield a 404",
+                "operationId": "get_ceda_biomass_request",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    }
+                ],
+                "produces": [
+                    "image/tiff"
+                ],
+                "tags": [
+                    "Biomass"
+                ]
+            }
+        },
+        "/cme-futures/stations": {
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "operationId": "get station list for given forecast_date",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "forecast_date",
+                        "in": "query",
+                        "type": "string",
+                        "format": "date",
+                        "description": "forecast date from which to get data"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CME Futures"
+                ]
+            }
+        },
+        "/cme-futures/{station_id}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": null,
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "forecast_date",
+                        "in": "query",
+                        "type": "string",
+                        "format": "date",
+                        "description": "forecast date from which to get data"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "CME Futures"
+                ]
+            }
+        },
+        "/cme-history/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "TMAX",
+                        "TMIN",
+                        "TAVG"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "03927",
+                        "13874",
+                        "14732",
+                        "14922",
+                        "23169",
+                        "23232",
+                        "24229",
+                        "93814",
+                        "94846",
+                        "47662",
+                        "03772",
+                        "06240"
+                    ],
+                    "in": "path",
+                    "description": "WMO station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "CME Station History"
+                ]
+            }
+        },
+        "/cwv-station-history/{station_name}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "CWV"
+                    ],
+                    "in": "path",
+                    "description": null,
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "EA",
+                        "EM",
+                        "NE",
+                        "NO",
+                        "NT",
+                        "NW",
+                        "SE",
+                        "SO",
+                        "SC",
+                        "SW",
+                        "WM",
+                        "WN",
+                        "WS"
+                    ],
+                    "in": "path",
+                    "description": null,
+                    "name": "station_name",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get Composite Weather Variable data by region",
+                "operationId": "get Composite Weather Variable data by region",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "CWV Station History"
+                ]
+            }
+        },
+        "/drought-monitor/{state}-{county}": {
+            "parameters": [
+                {
+                    "name": "state",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "county",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "invalid state/county combination"
+                    }
+                },
+                "summary": "get drought monitor percentages",
+                "operationId": "get_drought_monitor_request",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    }
+                ],
+                "tags": [
+                    "Drought Monitor"
+                ]
+            }
+        },
+        "/dutch-station-history/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "WINDSPEED",
+                        "RADIATION",
+                        "TMAX",
+                        "TMIN",
+                        "TAVG"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "209",
+                        "210",
+                        "215",
+                        "225",
+                        "229",
+                        "235",
+                        "240",
+                        "242",
+                        "248",
+                        "249",
+                        "251",
+                        "257",
+                        "258",
+                        "260",
+                        "265",
+                        "267",
+                        "269",
+                        "270",
+                        "273",
+                        "275",
+                        "277",
+                        "278",
+                        "279",
+                        "280",
+                        "283",
+                        "285",
+                        "286",
+                        "290",
+                        "308",
+                        "310",
+                        "311",
+                        "312",
+                        "313",
+                        "315",
+                        "316",
+                        "319",
+                        "323",
+                        "324",
+                        "330",
+                        "331",
+                        "340",
+                        "343",
+                        "344",
+                        "348",
+                        "350",
+                        "356",
+                        "370",
+                        "375",
+                        "377",
+                        "380",
+                        "391"
+                    ],
+                    "in": "path",
+                    "description": "dutch station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "Dutch Station History"
+                ]
+            }
+        },
+        "/eaufrance/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "FLOWRATE"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "V720001002"
+                    ],
+                    "in": "path",
+                    "description": "EauFrance station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "EauFrance"
+                ]
+            }
+        },
+        "/forecasts/{dataset}/{lat}_{lon}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "ecmwf_forecasts_temp2m-three_hourly",
+                        "ecmwf_forecasts_totalprecip-three_hourly",
+                        "ecmwf_forecasts_windu10m-three_hourly",
+                        "ecmwf_forecasts_windv10m-three_hourly",
+                        "gfs_10m_wind_u-hourly",
+                        "gfs_10m_wind_v-hourly",
+                        "gfs_pcp_rate-hourly",
+                        "gfs_relative_humidity-hourly",
+                        "gfs_tmax-hourly",
+                        "gfs_tmin-hourly",
+                        "gfs_volumetric_soil_moisture-hourly"
+                    ],
+                    "in": "path",
+                    "description": "select a dataset",
+                    "name": "dataset",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "latitude",
+                    "name": "lat",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "longitude",
+                    "name": "lon",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or coordinate"
+                    },
+                    "200": {
+                        "description": "json with weather data for coordinate"
+                    }
+                },
+                "summary": "get forecast data from gfs dataset",
+                "operationId": "get forecast data from gfs dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "forecast_date",
+                        "in": "query",
+                        "type": "string",
+                        "format": "date",
+                        "required": true,
+                        "description": "forecast date from which to get data"
+                    },
+                    {
+                        "name": "also_return_metadata",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to true to return dataset metadata",
+                        "default": false
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    },
+                    {
+                        "name": "also_return_snapped_coordinates",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "convert_to_local_time",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to 'true' by default",
+                        "default": true
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "Forecasts"
+                ]
+            }
+        },
+        "/german-station-history/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "TMAX",
+                        "TMIN",
+                        "TAVG",
+                        "TMINGROUND",
+                        "PRCP"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "german station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "German Station History"
+                ]
+            }
+        },
+        "/german-station-hourly-history/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "TAVG"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "05856",
+                        "01975",
+                        "05906",
+                        "01303",
+                        "03987",
+                        "03379",
+                        "02932"
+                    ],
+                    "in": "path",
+                    "description": "german station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "German Station Hourly History"
+                ]
+            }
+        },
+        "/ghcn-history/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "SNWD",
+                        "SNOW",
+                        "WESD",
+                        "TMAX",
+                        "TMIN",
+                        "PRCP",
+                        "WSF5"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "default": "USW00003016",
+                    "in": "path",
+                    "description": "GHCN station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    },
+                    {
+                        "name": "rounding_method",
+                        "in": "query",
+                        "type": "string",
+                        "description": "round values to the nearest specified decimal place. alternatively enter 'cme' to rounds to the nearest half value (.0 or .5)"
+                    },
+                    {
+                        "name": "dataset",
+                        "in": "query",
+                        "type": "string",
+                        "description": "which dClimate dataset to pull data from",
+                        "default": "ghcnd",
+                        "enum": [
+                            "ghcnd",
+                            "ghcnd-imputed-daily"
+                        ]
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "GHCN Dataset History"
+                ]
+            }
+        },
+        "/ghisd-station-history/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "TMP"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "03772099999",
+                        "54511099999",
+                        "58367099999",
+                        "58362099999",
+                        "11518099999",
+                        "47671099999"
+                    ],
+                    "in": "path",
+                    "description": "ghisd station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "GHISD"
+                ]
+            }
+        },
+        "/grid-history/{dataset}/{lat}_{lon}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "vhi",
+                        "prismc-tmax-daily",
+                        "prismc-tmin-daily",
+                        "prismc-precip-daily",
+                        "rtma_dew_point-hourly",
+                        "rtma_gust-hourly",
+                        "rtma_pcp-hourly",
+                        "rtma_temp-hourly",
+                        "rtma_wind_u-hourly",
+                        "rtma_wind_v-hourly",
+                        "cpcc_precip_us-daily",
+                        "cpcc_precip_global-daily",
+                        "cpcc_temp_max-daily",
+                        "cpcc_temp_min-daily",
+                        "chirpsc_final_05-daily",
+                        "chirpsc_final_25-daily",
+                        "chirpsc_prelim_05-daily",
+                        "era5_land_2m_temp-hourly",
+                        "era5_land_precip-hourly",
+                        "era5_land_surface_solar_radiation_downwards-hourly",
+                        "era5_land_snowfall-hourly",
+                        "era5_land_wind_u-hourly",
+                        "era5_land_wind_v-hourly",
+                        "era5_land_dewpoint_temp_2m-hourly",
+                        "era5_instantaneous_10m_wind_gust-hourly",
+                        "era5_surface_runoff-hourly",
+                        "era5_wind_100m_u-hourly",
+                        "era5_wind_100m_v-hourly",
+                        "era5_volumetric_soil_water_layer_1-hourly",
+                        "era5_precip-hourly",
+                        "copernicus_ocean_temp_1p5_meters-daily",
+                        "copernicus_ocean_temp_6p5_meters-daily"
+                    ],
+                    "in": "path",
+                    "description": "select a dataset",
+                    "name": "dataset",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "latitude",
+                    "name": "lat",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "longitude",
+                    "name": "lon",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or coordinate"
+                    },
+                    "200": {
+                        "description": "json with weather data for coordinate"
+                    }
+                },
+                "summary": "get history from grid file dataset",
+                "operationId": "get history from grid file dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "also_return_metadata",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to true to return dataset metadata",
+                        "default": false
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    },
+                    {
+                        "name": "also_return_snapped_coordinates",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "convert_to_local_time",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "as_of",
+                        "in": "query",
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Truncate updates generated after `as_of`"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "Grid File Dataset History"
+                ]
+            }
+        },
+        "/inmet/{station_id}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "PRCP",
+                        "PRSR",
+                        "PRSRMAX",
+                        "PRSRMIN",
+                        "RDTN",
+                        "TAIR",
+                        "TDEW",
+                        "TMAX",
+                        "TMIN",
+                        "TDEWMAX",
+                        "TDEWMIN",
+                        "HMDYMAX",
+                        "HMDYMIN",
+                        "HMDY",
+                        "WINDDIR",
+                        "GUSTMAX",
+                        "WINDSPD"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "ECOLOGIA_AGRICOLA",
+                        "SALVADOR",
+                        "BRASILIA",
+                        "PORTO_ALEGRE",
+                        "MANAUS",
+                        "BAURU",
+                        "SANTANA_DO_LIVRAMENTO",
+                        "BARREIRAS",
+                        "SANTO_AUGUSTO",
+                        "TRES_LAGOAS",
+                        "MORRINHOS",
+                        "GOIANIA",
+                        "CAMPO_GRANDE",
+                        "SANTA_MARIA",
+                        "RIO_GRANDE",
+                        "PONTA_PORA",
+                        "ARAXA",
+                        "MARAMBAIA",
+                        "CAMBUCI",
+                        "CAMPOS_DO_JORDAO",
+                        "TANGARA_DA_SERRA",
+                        "UBERLANDIA",
+                        "GUARANTA_DO_NORTE",
+                        "XEREM",
+                        "CAMPO_NOVO_DOS_PARECIS",
+                        "ALMENARA",
+                        "FRANCA",
+                        "SORRISO",
+                        "CARAVELAS",
+                        "BARBACENA",
+                        "LUIZ_EDUARDO_MAGALHAES",
+                        "MONTES_CLAROS",
+                        "CUIABA",
+                        "PETROLINA",
+                        "ITIRUCU",
+                        "CASTANHAL",
+                        "FLORIANOPOLIS",
+                        "MACEIO",
+                        "SAO_LUIS",
+                        "SOBRAL",
+                        "MACAJUBA",
+                        "IVINHEMA",
+                        "RONDONOPOLIS",
+                        "PRESIDENTE_PRUDENTE",
+                        "ILHEUS",
+                        "NATAL",
+                        "ITABERABA",
+                        "FORTALEZA",
+                        "ARACAJU",
+                        "CRUZ_DAS_ALMAS",
+                        "S_J_DO_RIO_CLARO",
+                        "PARNAIBA",
+                        "BELEM",
+                        "CURITIBA",
+                        "ARQ_SAO_PEDRO_E_SAO_PAULO",
+                        "ARCO_VERDE",
+                        "PALMAS",
+                        "TERESINA",
+                        "AREIA",
+                        "FLORIANO",
+                        "RECIFE",
+                        "MONTE_VERDE",
+                        "PARANA",
+                        "VICOSA",
+                        "COMODORO",
+                        "SAO_MIGUEL_ARCANJO",
+                        "JUARA",
+                        "ITUIUTABA",
+                        "CAMPINA_GRANDE",
+                        "MARINGA",
+                        "PASSO_FUNDO",
+                        "SAO_CARLOS",
+                        "PARATI",
+                        "VILA_BELA_DA_SANTISSIMA_TRINDADE",
+                        "IGUAPE",
+                        "SOROCABA",
+                        "JUINA",
+                        "COXIM",
+                        "PASSOS",
+                        "MARACAJU",
+                        "PARANAIBA",
+                        "ALEGRETE",
+                        "SAO_JOSE_DOS_AUSENTES",
+                        "AGUA_BOA",
+                        "SACRAMENTO",
+                        "ALEGRE",
+                        "PATROCINIO",
+                        "SAO_MATEUS",
+                        "TEOFILO_OTONI",
+                        "CURVELO",
+                        "MIRANDA",
+                        "ALFREDO_CHAVES",
+                        "CAMAQUA",
+                        "DOURADOS",
+                        "SINOP",
+                        "INACIO_MARTINS",
+                        "PAMPULHA",
+                        "VALENCA",
+                        "CAMPOS",
+                        "JOAQUIM_TAVORA",
+                        "ARRAIAL_DO_CABO",
+                        "ITAPEVA",
+                        "URUGUAIANA",
+                        "SAO_GABRIEL_DO_OESTE",
+                        "VITORIA",
+                        "LINS",
+                        "AVARE",
+                        "CASTRO",
+                        "NHUMIRIM",
+                        "CORUMBA",
+                        "MAL_CANDIDO_RONDON",
+                        "MURIAE",
+                        "ERECHIM",
+                        "LUZIANIA",
+                        "TERESOPOLIS",
+                        "ICARAIMA",
+                        "SANTA_ROSA",
+                        "SAO_SIMAO",
+                        "SERRA_DOS_AIMORES",
+                        "OURINHOS",
+                        "GURUPI",
+                        "RIO_PARDO",
+                        "INDAIAL",
+                        "TIMOTEO",
+                        "AQUIDAUANA",
+                        "NOVA_TEBAS",
+                        "RANCHARIA",
+                        "PORTO_MURTINHO",
+                        "CALDAS",
+                        "RESENDE",
+                        "OURO_BRANCO",
+                        "MARIA_DA_FE",
+                        "CACAPAVA_DO_SUL",
+                        "PEIXE",
+                        "APIACAS",
+                        "CHAPADAO_DO_SUL",
+                        "LINHARES",
+                        "FORMIGA",
+                        "TRES_MARIAS",
+                        "VARGINHA",
+                        "PARANATINGA",
+                        "VOTUPORANGA",
+                        "SAO_JOAO_DEL_REI",
+                        "TAUBATE",
+                        "CAMPO_VERDE",
+                        "PIRACICABA",
+                        "IVAI",
+                        "CONCEICAO_DAS_ALAGOAS",
+                        "CAMPINA_VERDE",
+                        "PICO_DO_COUTO",
+                        "TORRES",
+                        "SAO_PAULO_MIRANTE",
+                        "BENTO_GONCALVES",
+                        "MACAE",
+                        "CORRENTINA",
+                        "FEIRA_DE_SANTANA",
+                        "POSSE",
+                        "CANGUCU",
+                        "CRUZ_ALTA",
+                        "SAO_LUIZ_GONZAGA",
+                        "JAGUARAO",
+                        "JAGUARUANA",
+                        "PASSA_QUATRO",
+                        "PEDRO_AFONSO",
+                        "SANTA_RITA_DE_CASSIA",
+                        "MORADA_NOVA",
+                        "QUARAI",
+                        "JALES",
+                        "AGUAS_VERMELHAS",
+                        "CARACOL",
+                        "CARUARU",
+                        "RIO_PARDO_DE_MINAS",
+                        "PARAGOMINAS",
+                        "BURITIS",
+                        "MOCAMBINHO",
+                        "ARAGUAINA",
+                        "ESPINOSA",
+                        "JATAI",
+                        "ITAPACI",
+                        "FORTE_DE_COPACABANA",
+                        "LAGOA_VERMELHA",
+                        "BOM_JESUS_DO_PIAUI",
+                        "PIRAPORA",
+                        "MONTE_ALEGRE_DE_GOIAS",
+                        "SAO_FELIX_DO_ARAGUAIA",
+                        "JOAO_PESSOA",
+                        "AIMORES",
+                        "CARATINGA",
+                        "QUIXERAMOBIM",
+                        "CASA_BRANCA",
+                        "PATOS",
+                        "UNAI",
+                        "PAO_DE_ACUCAR",
+                        "SANTA_TERESA",
+                        "PLANALTO",
+                        "CAPELINHA",
+                        "SAO_ROMAO",
+                        "SAO_JOAO_DO_PIAUI",
+                        "JUIZ_DE_FORA",
+                        "VALPARAISO",
+                        "PIRES_DO_RIO",
+                        "BOM_JESUS_DA_LAPA",
+                        "VILA_MILITAR",
+                        "PIRIPIRI",
+                        "DOIS_VIZINHOS",
+                        "SAO_LUIS_DO_PARAITINGA",
+                        "SAO_BORJA",
+                        "ITAPOA",
+                        "CAIAPONIA",
+                        "MONTEIRO",
+                        "ITAOBIM",
+                        "MONTALVANIA",
+                        "ITABAIANINHA",
+                        "ALTA_FLORESTA",
+                        "TAUA",
+                        "ITAPIRA",
+                        "IBITINGA",
+                        "JOAO_PINHEIRO",
+                        "JOACABA",
+                        "NOVA_FATIMA",
+                        "GUARDA_MOR",
+                        "BARBALHA",
+                        "GUARAMIRANGA",
+                        "PAULISTANA",
+                        "QUERENCIA",
+                        "SAO_GABRIEL",
+                        "PALMEIRA_DOS_INDIOS",
+                        "BAGE",
+                        "GARANHUNS",
+                        "DIAMANTINA",
+                        "GUANHAES",
+                        "MANTENA",
+                        "CABROBO",
+                        "ARIRANHA",
+                        "SALINAS",
+                        "GOVERNADOR_VALADARES",
+                        "ITUMBIARA",
+                        "ARAGARCAS",
+                        "CHAPADA_GAUCHA",
+                        "MOSSORO",
+                        "GOIAS",
+                        "PORTO_VELHO",
+                        "MINEIROS",
+                        "RIO_VERDE",
+                        "MACAU",
+                        "CAICO",
+                        "GOIANESIA",
+                        "APODI",
+                        "SAO_GONCALO",
+                        "COTRIGUACU",
+                        "CAROLINA",
+                        "ESPERANTINA",
+                        "CRISTALINA",
+                        "BALSAS",
+                        "ILHA_DO_MEL",
+                        "ALVORADA_DO_GURGUEIA",
+                        "IGUATU",
+                        "VITORIA_DA_CONQUISTA",
+                        "TOME_ACU",
+                        "DORES_DO_INDAIA",
+                        "ALTO_PARAISO_DE_GOIAS",
+                        "BOM_JARDIM_DA_SERRA_MORRO_DA_IGREJA",
+                        "FREDERICO_WESTPHALEN",
+                        "JOSE_BONIFACIO",
+                        "CAMPOS_SALES",
+                        "COARI",
+                        "BACABAL",
+                        "NOVO_HORIZONTE",
+                        "JACOBINA",
+                        "CIDADE_GAUCHA",
+                        "CAMETA",
+                        "PARAUNA",
+                        "CASSILANDIA",
+                        "CLEVELANDIA",
+                        "AGUAS_EMENDADAS",
+                        "BARRA",
+                        "CATALAO",
+                        "PALMARES",
+                        "OIAPOQUE",
+                        "SERRA_TALHADA",
+                        "ALTO_PARNAIBA",
+                        "AMAMBAI",
+                        "PARINTINS",
+                        "HUMAITA",
+                        "JUTI",
+                        "ARARANGUA",
+                        "BURITIRAMA",
+                        "OEIRAS",
+                        "BRUMADO",
+                        "SANTANA_DO_ARAGUAIA",
+                        "FOZ_DO_IGUACU",
+                        "SOURE",
+                        "CURITIBANOS",
+                        "CHAPADINHA",
+                        "ITACOATIARA",
+                        "PRADOPOLIS",
+                        "PACAJA",
+                        "BARRA_BONITA",
+                        "SAO_LUIS_DO_QUITUNDE",
+                        "IBIRITE_ROLA_MOCA",
+                        "MOSTARDAS",
+                        "BOCA_DO_ACRE",
+                        "BREJO_GRANDE",
+                        "GRAJAU",
+                        "ALTO_TAQUARI",
+                        "RONDON_DO_PARA",
+                        "RIO_DO_CAMPO",
+                        "RIO_BRILHANTE",
+                        "DELFINO",
+                        "REMANSO",
+                        "RIO_URUBU",
+                        "PORTO_SEGURO",
+                        "LABREA",
+                        "TRAMANDAI",
+                        "MAUES",
+                        "ITAITUBA",
+                        "BRASNORTE_MUNDO_NOVO",
+                        "AUTAZES",
+                        "JAPIRA",
+                        "NOVA_MARINGA",
+                        "SURUBIM",
+                        "COLINAS",
+                        "PICOS",
+                        "IMPERATRIZ",
+                        "CAXIAS",
+                        "MARAU",
+                        "URUCARA",
+                        "QUEIMADAS",
+                        "CAMARATUBA",
+                        "URUCUI",
+                        "IRECE",
+                        "SERRA_DOS_CARAJAS",
+                        "VACARIA",
+                        "BARCELOS",
+                        "TUCUMA",
+                        "ITAQUIRAI",
+                        "SALTO_DO_CEU",
+                        "CALCANHAR",
+                        "BARRA_DO_CORDA",
+                        "CORURIPE",
+                        "CABACEIRAS",
+                        "NOVA_UBIRATA",
+                        "PARQUE_ESTADUAL_CHANDLESS",
+                        "SAO_TOME",
+                        "GUIRATINGA",
+                        "SAO_JOAQUIM",
+                        "CRATEUS",
+                        "LAGUNA_FAROL_DE_SANTA_MARTA",
+                        "MEDICILANDIA",
+                        "GENERAL_CARNEIRO",
+                        "PARANAPOEMA",
+                        "PRES_KENNEDY",
+                        "RIO_BRANCO",
+                        "BARRA_DO_TURVO",
+                        "APUI",
+                        "ITUVERAVA",
+                        "FAROL_DE_SANTANA",
+                        "SAO_MIGUEL_DO_OESTE",
+                        "CANELA",
+                        "DIAMANTE_DO_NORTE",
+                        "IBOTIRAMA",
+                        "SENHOR_DO_BONFIM",
+                        "AMARGOSA",
+                        "NOVA_VENECIA",
+                        "FLORESTAL",
+                        "TURIACU",
+                        "POCO_VERDE",
+                        "PLACAS",
+                        "SETE_QUEDAS",
+                        "VILHENA",
+                        "BRAGANCA",
+                        "LENCOIS",
+                        "FLORESTA",
+                        "SALINOPOLIS",
+                        "CARIRA",
+                        "PIATA",
+                        "EUCLIDES_DA_CUNHA",
+                        "ABROLHOS",
+                        "UAUA",
+                        "PALMEIRA_DAS_MISSOES",
+                        "CONCEICAO_DO_ARAGUAIA",
+                        "PORTO_ESTRELA",
+                        "TUCURUI",
+                        "DIONISIO_CERQUEIRA",
+                        "SOLEDADE",
+                        "JAGUARIBE",
+                        "CARLINDA",
+                        "PREGUICAS",
+                        "SAO_RAIMUNDO_NONATO",
+                        "SERRINHA",
+                        "XANXERE",
+                        "ARAPIRACA",
+                        "GAUCHA_DO_NORTE",
+                        "CACOAL",
+                        "CONDE",
+                        "ITIQUIRA",
+                        "ESTREITO",
+                        "MORRETES",
+                        "PONTES_E_LACERDA",
+                        "MANACAPURU",
+                        "IBIMIRIM",
+                        "ITAPIPOCA",
+                        "GUANAMBI",
+                        "SIDROLANDIA",
+                        "URUSSANGA",
+                        "SANTA_VITORIA_DO_PALMAR_BARRA_DO_CHUI",
+                        "NOVO_REPARTIMENTO",
+                        "DIANOPOLIS",
+                        "BURITICUPU",
+                        "PRESIDENTE_FIGUEIREDO",
+                        "SANTO_ANTONIO_DO_LESTE",
+                        "ITUPORANGA",
+                        "RIO_NEGRINHO",
+                        "ARIQUEMES",
+                        "FORMOSO_DO_ARAGUAIA",
+                        "CACADOR",
+                        "UNA",
+                        "MARABA",
+                        "FEIJO",
+                        "EPITACIOLANDIA",
+                        "SAO_PEDRO_DO_PIAUI",
+                        "GILBUES",
+                        "ITAPETINGA",
+                        "ACARAU",
+                        "CASTELO_DO_PIAUI",
+                        "IPIAU",
+                        "VALENCA_DO_PIAUI",
+                        "PORTO_WALTER",
+                        "MAJOR_VIEIRA",
+                        "SANTIAGO",
+                        "ARAGUATINS",
+                        "BELMONTE",
+                        "MARECHAL_THAUMATURGO",
+                        "MINA_DO_PALITO",
+                        "AGUA_CLARA",
+                        "NOVA_FRIBURGO",
+                        "DOM_PEDRITO",
+                        "ITAJAI",
+                        "SILVANIA",
+                        "CANTO_DO_BURITI",
+                        "OURICURI",
+                        "SANTA_CRUZ",
+                        "MANHUACU",
+                        "BOA_VISTA",
+                        "BARRETOS",
+                        "CAPITAO_POCO",
+                        "MANICORE",
+                        "VENTANIA",
+                        "AFONSO_CLAUDIO",
+                        "SAO_MATEUS_DO_SUL",
+                        "ALTO_ARAGUAIA",
+                        "S_G_DA_CACHOEIRA",
+                        "BELA_VISTA",
+                        "JARDIM",
+                        "BARUERI",
+                        "IBIRUBA",
+                        "EIRUNEPE",
+                        "CAMPOS_LINDOS",
+                        "TEUTONIA",
+                        "MARIANOPOLIS_DO_TO",
+                        "MONTE_ALEGRE",
+                        "CACERES",
+                        "CORONEL_PACHECO",
+                        "COSTA_RICA",
+                        "MATEIROS",
+                        "OBIDOS",
+                        "SONORA",
+                        "IPORA",
+                        "BELO_HORIZONTE_CERCADINHO",
+                        "MACAPA",
+                        "BATAGUASSU",
+                        "CAMPO_BOM",
+                        "LAGES",
+                        "GAMA_PONTE_ALTA",
+                        "ARAGUACU",
+                        "SAO_SEBASTIAO_DO_PARAISO",
+                        "SANTAREM",
+                        "SILVA_JARDIM",
+                        "SAQUAREMA",
+                        "SANTA_ROSA_DO_TOCANTINS",
+                        "CRUZEIRO_DO_SUL",
+                        "CURACA",
+                        "JEREMOABO",
+                        "SETE_LAGOAS",
+                        "DTCEA_VILHENA",
+                        "TUPANCIRETA",
+                        "DTCEA_JACAREACANGA",
+                        "SANTA_ISABEL_DO_RIO_NEGRO",
+                        "SAO_FELIX_DO_XINGU",
+                        "DTCEA_TEFE",
+                        "EB_PEF_BONFIM",
+                        "SAO_VICENTE_DO_SUL",
+                        "FORMOSO_DO_RIO_PRETO",
+                        "LAGOA_DA_CONFUSAO",
+                        "RIO_SONO",
+                        "ITAMARAJU",
+                        "PEF_YAUARETE",
+                        "PEF_IPIRANGA",
+                        "LARANJEIRAS_DO_SUL",
+                        "DTCEA_TABATINGA",
+                        "ULIANOPOLIS",
+                        "TRES_RIOS",
+                        "DRACENA",
+                        "JANAUBA",
+                        "PEF_ESTIRAO_DO_EQUADOR",
+                        "COLINAS_DO_TOCANTINS",
+                        "SAO_BENTO",
+                        "PILAO_ARCADO",
+                        "JANUARIA",
+                        "SANTA_FE_DO_ARAGUAIA",
+                        "PIUM",
+                        "MACAUBAS",
+                        "CRMN_MANAUS",
+                        "CAMBARA_DO_SUL",
+                        "DTCEA_GUAJARA_MIRIM",
+                        "ALMAS",
+                        "XINGUARA",
+                        "RANCHO_QUEIMADO",
+                        "BEBDOURO",
+                        "BALIZA",
+                        "DOM_ELISEU",
+                        "SERAFINA_CORREA",
+                        "RIO_CLARO",
+                        "BAMBUI",
+                        "FORTE_PRINCIPE",
+                        "COLOMBO",
+                        "CAMPINA_DA_LAGOA",
+                        "PACARAIMA",
+                        "VENDA_NOVA_DO_IMIGRANTE",
+                        "EDEIA",
+                        "DIVINOPOLIS",
+                        "RIO_DE_JANEIRO_JACAREPAGUA",
+                        "SAO_MIGUEL_DO_ARAGUAIA",
+                        "ITAPORANGA",
+                        "UBERABA",
+                        "PARANOA_COOPA_DF",
+                        "PIRANHAS",
+                        "BRAGANCA_PAULISTA",
+                        "VILA_VELHA",
+                        "CACHOEIRA_PAULISTA",
+                        "NOSSA_SENHORA_DA_GLORIA",
+                        "MARILANDIA",
+                        "OLIVEIRA",
+                        "SAPEZAL",
+                        "IPANGUACU",
+                        "ITATIAIA",
+                        "BRAZLANDIA",
+                        "SALGUEIRO",
+                        "BREVES",
+                        "ITAUBAL",
+                        "SAO_SEBASTIAO",
+                        "TUPA",
+                        "ITABAIANA",
+                        "MARILIA",
+                        "PATOS_DE_MINAS",
+                        "ARACUAI",
+                        "ANGRA_DOS_REIS",
+                        "BERTIOGA",
+                        "MACHADO",
+                        "REGISTRO",
+                        "ECOPORANGA",
+                        "PRIMAVERA_DO_LESTE",
+                        "IGUATEMI",
+                        "BONITO",
+                        "RIBEIRA_DO_AMPARO",
+                        "SALVADOR_RADIO_FAROL",
+                        "BANDEIRANTES",
+                        "PORANGATU",
+                        "CRISTALINA_FAZENDA_SANTA_MONICA",
+                        "PARACATU",
+                        "ANGELICA",
+                        "NITEROI",
+                        "CAARAPO",
+                        "ITAPORA",
+                        "ALTAMIRA",
+                        "SELVIRIA",
+                        "TIANGUA",
+                        "RIBAS_DO_RIO_PARDO",
+                        "NOVA_ANDRADINA",
+                        "ARAL_MOREIRA",
+                        "SANTA_RITA_DO_PARDO",
+                        "ENCRUZILHADA_DO_SUL",
+                        "SANTA_MARIA_MADALENA",
+                        "CARMO",
+                        "CAMPO_MAIOR",
+                        "LAGUNA_CARAPA",
+                        "BAIXA_GRANDE_DO_RIBEIRO",
+                        "NOVA_ALVORADA_DO_SUL",
+                        "PEDRO_GOMES",
+                        "CORRENTE",
+                        "SAO_PAULO_INTERLAGOS",
+                        "BRASILANDIA",
+                        "CAMAPUA",
+                        "FATIMA_DO_SUL",
+                        "QUIXADA",
+                        "RIO_DE_JANEIRO_FORTE_DE_COPACABANA",
+                        "ANGICAL_DO_PIAUI",
+                        "SAQUAREMA_SAMPAIO_CORREIA",
+                        "BRASNORTE_NOVO_MUNDO",
+                        "ROSARIO_OESTE",
+                        "GOIOERE",
+                        "CHAPECO",
+                        "CAMPOS_NOVOS",
+                        "REDENCAO",
+                        "ZE_DOCA",
+                        "DUQUE_DE_CAXIAS_XEREM",
+                        "SEROPEDICA_ECOLOGIA_AGRICOLA",
+                        "CAPAO_DO_LEAO_PELOTAS",
+                        "SERRA_NOVA_DOURADA",
+                        "NOVO_ARIPUANA",
+                        "RIO_DE_JANEIRO_MARAMBAIA",
+                        "TERESOPOLIS_PARQUE_NACIONAL",
+                        "SAO_JOSE_DO_XINGU",
+                        "NOVA_FRIBURGO_SALINAS",
+                        "RIO_DE_JANEIRO_VILA_MILITAR",
+                        "CAMPOS_DOS_GOYTACAZES",
+                        "PORTO_GRANDE",
+                        "CAMPOS_DOS_GOYTACAZES_SAO_TOME",
+                        "CRIOSFERA",
+                        "POMPEU",
+                        "SANTA_MARIA_DAS_BARREIRAS",
+                        "BEBEDOURO",
+                        "BELO_HORIZONTE_PAMPULHA",
+                        "FORMOSA_DO_RIO_PRETO",
+                        "PORTO_ALEGRE_BELEM_NOVO",
+                        "NOVA_PORTEIRINHA_JANAUBA",
+                        "SAO_LUIZ_DO_PARAITINGA",
+                        "PORTO_DE_MOZ",
+                        "PATY_DO_ALFERES_AVELAR",
+                        "PORTO_ALEGRE_JARDIM_BOTANICO",
+                        "PRESIDENTE_KENNEDY",
+                        "PARATY"
+                    ],
+                    "in": "path",
+                    "description": "inmet station id",
+                    "name": "station_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get history from station dataset",
+                "operationId": "get history from station dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "INMET"
+                ]
+            }
+        },
+        "/irrigation_splits/{commodity}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "four digit RMA commodity code",
+                    "name": "commodity",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid parameters"
+                    }
+                },
+                "summary": "Get irrigation data for all states/counties where a commodity is grown",
+                "operationId": "Get irrigation data for all states/counties where a commodity is grown",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    }
+                ],
+                "produces": [
+                    "text/csv"
+                ],
+                "tags": [
+                    "FSA Irrigation Data"
+                ]
+            }
+        },
+        "/japan-station-history/{station_name}/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "TAVG"
+                    ],
+                    "in": "path",
+                    "description": null,
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "enum": [
+                        "Tokyo",
+                        "Osaka",
+                        "Sapporo",
+                        "Fukuoka"
+                    ],
+                    "in": "path",
+                    "description": null,
+                    "name": "station_name",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "get Japan Station average temperature data",
+                "operationId": "get Japan Station average temperature data",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "Japan Station History"
+                ]
+            }
+        },
+        "/metadata/{dataset}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "EauFrance-daily",
+                        "aemo-semihourly",
+                        "afr-monthly",
+                        "alberta_power-hourly",
+                        "atcf_btk-seasonal",
+                        "bom_australia_stations-daily",
+                        "ceda_biomass",
+                        "chirpsc_final_05-daily",
+                        "chirpsc_final_25-daily",
+                        "chirpsc_prelim_05-daily",
+                        "cme_futures-daily",
+                        "cme_temperature_stations-daily",
+                        "copernicus_ocean_temp_1p5_meters-daily",
+                        "copernicus_ocean_temp_6p5_meters-daily",
+                        "cpc_teleconnections-monthly",
+                        "cpcc_precip_global-daily",
+                        "cpcc_precip_us-daily",
+                        "cpcc_temp_max-daily",
+                        "cpcc_temp_min-daily",
+                        "cwv-daily",
+                        "drought_monitor-weekly",
+                        "dutch_stations-daily",
+                        "dwd_hourly-hourly",
+                        "dwd_stations-daily",
+                        "ecmwf_forecasts_temp2m-three_hourly",
+                        "ecmwf_forecasts_totalprecip-three_hourly",
+                        "ecmwf_forecasts_windu10m-three_hourly",
+                        "ecmwf_forecasts_windv10m-three_hourly",
+                        "edd-daily",
+                        "era5_instantaneous_10m_wind_gust-hourly",
+                        "era5_land_2m_temp-hourly",
+                        "era5_land_dewpoint_temp_2m-hourly",
+                        "era5_land_precip-hourly",
+                        "era5_land_snowfall-hourly",
+                        "era5_land_surface_solar_radiation_downwards-hourly",
+                        "era5_land_wind_u-hourly",
+                        "era5_land_wind_v-hourly",
+                        "era5_precip-hourly",
+                        "era5_surface_runoff-hourly",
+                        "era5_volumetric_soil_water_layer_1-hourly",
+                        "era5_wind_100m_u-hourly",
+                        "era5_wind_100m_v-hourly",
+                        "fsa_irrigation_splits",
+                        "gfs_10m_wind_u-hourly",
+                        "gfs_10m_wind_v-hourly",
+                        "gfs_pcp_rate-hourly",
+                        "gfs_relative_humidity-hourly",
+                        "gfs_tmax-hourly",
+                        "gfs_tmin-hourly",
+                        "gfs_volumetric_soil_moisture-hourly",
+                        "ghcnd",
+                        "ghcnd-imputed-daily",
+                        "ghisd-sub_hourly",
+                        "ibtracs_storm_basins",
+                        "inmet_brazil-hourly",
+                        "japan_meteo-daily",
+                        "nass_corn-yearly",
+                        "nass_crops",
+                        "nass_soybeans-yearly",
+                        "ne_iso-hourly",
+                        "prismc-precip-daily",
+                        "prismc-tmax-daily",
+                        "prismc-tmin-daily",
+                        "rma_t_yield-single-value",
+                        "rma_t_yield_imputed-single-value",
+                        "rmasco_imputed-yearly",
+                        "rtma_dew_point-hourly",
+                        "rtma_gust-hourly",
+                        "rtma_pcp-hourly",
+                        "rtma_temp-hourly",
+                        "rtma_wind_u-hourly",
+                        "rtma_wind_v-hourly",
+                        "sap-daily",
+                        "sco-yearly",
+                        "sco_sales_dates",
+                        "sco_vhi_imputed-yearly",
+                        "storm-simulated-hurricane",
+                        "teleconnections-el-nino-monthly",
+                        "us_counties_geo_json",
+                        "vhi"
+                    ],
+                    "in": "path",
+                    "description": "select a dataset",
+                    "name": "dataset",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset"
+                    },
+                    "200": {
+                        "description": "json or csv with dataset metadata"
+                    }
+                },
+                "summary": "get dataset metadata infromation for a given dataset",
+                "operationId": "get dataset metadata infromation for a given dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "full_metadata",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to true to return datasets full metadata",
+                        "default": false
+                    }
+                ],
+                "produces": [
+                    "application/json",
+                    "text/csv"
+                ],
+                "tags": [
+                    "Dataset Information"
+                ]
+            }
+        },
+        "/power-history/ne_iso/load": {
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "Get historical hourly power from New England USA",
+                "operationId": "get history from power dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "use_imperial_units",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "whether to convert values to imperial units. set to 'true' by default",
+                        "default": true
+                    },
+                    {
+                        "name": "desired_units",
+                        "in": "query",
+                        "type": "string",
+                        "description": "override use_imperial_units and attempt to convert the result into the specified  unit"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "NE ISO Power"
+                ]
+            }
+        },
+        "/rma-code-lookups/valid_counties/{state}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "State code",
+                    "name": "state",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "get county name and codes for yield datasets",
+                "operationId": "get county name and codes for yield datasets",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "USDA RMA Codes"
+                ]
+            }
+        },
+        "/rma-code-lookups/valid_states": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "get state name and codes for yield datasets",
+                "operationId": "get state name and codes for yield datasets",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "USDA RMA Codes"
+                ]
+            }
+        },
+        "/storms/{source}/{basin}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "storm basin for which to get data. \n        if source is 'atcf', one of: 'AL', 'CP', 'EP', 'SL'. \n        if source is 'simulated', one of: 'EP', 'NA', 'NI', 'SI', 'SP' 'WP'. \n        if source is 'historical', one of: 'NI', 'SI', 'NA', 'EP', 'WP', 'SP', 'SA'.",
+                    "name": "basin",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "default": "historical",
+                    "enum": [
+                        "atcf",
+                        "historical",
+                        "simulated"
+                    ],
+                    "in": "path",
+                    "description": "source from which to pull storm data",
+                    "name": "source",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid source, basin or geographic args"
+                    },
+                    "200": {
+                        "description": "time series csv with points along tropical storm routes"
+                    }
+                },
+                "summary": "get data on the tracks of tropical storms",
+                "description": "Note: for this endpoint (radius, lat, lon) and (min_lat, min_lon, max_lat, max_lon) are incompatible parameters.\ni.e., if given parameters containing members from both tuples, return 404\nin addition, the function's args must contain either all members of one of the above tuples, or none\ni.e., if given parameters containing some but not all of the members of one of the above tuples, return 404",
+                "operationId": "get data from storms dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "radius",
+                        "in": "query",
+                        "type": "string",
+                        "description": "if given radius, lat, lon, will subset csv to only include points within radius in km of the point (lat, lon)"
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "type": "string",
+                        "description": "if given radius, lat, lon, will subset csv to only include points within radius in km of the point (lat, lon)"
+                    },
+                    {
+                        "name": "lon",
+                        "in": "query",
+                        "type": "string",
+                        "description": "if given radius, lat, lon, will subset csv to only include points within radius in km of the point (lat, lon)"
+                    },
+                    {
+                        "name": "min_lat",
+                        "in": "query",
+                        "type": "string",
+                        "description": "if given min_lat, min_lon, max_lat, max_lon, selects points within a bounding box."
+                    },
+                    {
+                        "name": "min_lon",
+                        "in": "query",
+                        "type": "string",
+                        "description": "if given min_lat, min_lon, max_lat, max_lon, selects points within a bounding box."
+                    },
+                    {
+                        "name": "max_lat",
+                        "in": "query",
+                        "type": "string",
+                        "description": "if given min_lat, min_lon, max_lat, max_lon, selects points within a bounding box."
+                    },
+                    {
+                        "name": "max_lon",
+                        "in": "query",
+                        "type": "string",
+                        "description": "if given min_lat, min_lon, max_lat, max_lon, selects points within a bounding box."
+                    },
+                    {
+                        "name": "as_of",
+                        "in": "query",
+                        "type": "string",
+                        "format": "date",
+                        "description": "Truncate updates generated after `as_of`"
+                    }
+                ],
+                "produces": [
+                    "text/csv"
+                ],
+                "tags": [
+                    "Tropical Storms Data"
+                ]
+            }
+        },
+        "/teleconnections/{weather_variable}": {
+            "parameters": [
+                {
+                    "enum": [
+                        "EA",
+                        "EA_WR",
+                        "EP_NP",
+                        "MEI_V2",
+                        "NAO",
+                        "NINO1+2",
+                        "NINO3.4",
+                        "NINO3",
+                        "NINO4",
+                        "PDO",
+                        "PNA",
+                        "POL",
+                        "PT",
+                        "QBO",
+                        "SCA",
+                        "SOI",
+                        "TNH",
+                        "WP",
+                        "ENSO"
+                    ],
+                    "in": "path",
+                    "description": "variable for which to get data",
+                    "name": "weather_variable",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid variable"
+                    },
+                    "200": {
+                        "description": "json with requested statistical coefficient"
+                    }
+                },
+                "operationId": "get data from El Nino dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "Teleconnections Data"
+                ]
+            }
+        },
+        "/transitional_yield/valid_commodities/{state}_{county}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "County code",
+                    "name": "county",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "State code",
+                    "name": "state",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "get valid commodity names and codes for yield datasets",
+                "operationId": "get valid commodity names and codes for transitional yield datasets",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Transitional Yield Values"
+                ]
+            }
+        },
+        "/transitional_yield/{commodity}_{state}_{county}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "County code",
+                    "name": "county",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "State code",
+                    "name": "state",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "Commodity code",
+                    "name": "commodity",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid parameters"
+                    },
+                    "200": {
+                        "description": "csv with yield data for the parameters"
+                    }
+                },
+                "summary": "get history from rma transitional yield dataset",
+                "operationId": "get history from rma transitional yield dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "impute",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to true to use Arbol-calculated multipliers on all soybean values",
+                        "default": false
+                    }
+                ],
+                "produces": [
+                    "text/csv"
+                ],
+                "tags": [
+                    "Transitional Yield Values"
+                ]
+            }
+        },
+        "/uk-national-grid/sap/": {
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid dataset or station"
+                    },
+                    "200": {
+                        "description": "json with weather data for station"
+                    }
+                },
+                "summary": "Get gas price in pence per kW hour for the UK",
+                "operationId": "Get gas price in pence per kW hour for the UK",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    }
+                ],
+                "produces": [
+                    "text/csv",
+                    "application/json"
+                ],
+                "tags": [
+                    "UK National Grid"
+                ]
+            }
+        },
+        "/user/get_token": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "lookup a user account and associated authorization key",
+                "operationId": "lookup a user account and associated authorization key",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "type": "string",
+                        "format": "email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password",
+                        "required": true
+                    }
+                ],
+                "tags": [
+                    "Account Registration"
+                ]
+            }
+        },
+        "/yield/valid_commodities/{state}_{county}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "County code",
+                    "name": "county",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "State code",
+                    "name": "state",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "get valid commodity names and codes for yield datasets",
+                "operationId": "get valid commodity names and codes for sco yield dataset",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SCO Yield History"
+                ]
+            }
+        },
+        "/yield/{commodity}_{state}_{county}": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "description": "County code",
+                    "name": "county",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "State code",
+                    "name": "state",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "in": "path",
+                    "description": "Commodity code",
+                    "name": "commodity",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "500": {
+                        "description": "unknown error"
+                    },
+                    "404": {
+                        "description": "invalid parameters"
+                    },
+                    "200": {
+                        "description": "csv with yield data for the parameters"
+                    }
+                },
+                "summary": "get history from sco yield dataset",
+                "operationId": "get history from sco yield dataset",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "type": "string",
+                        "format": "password"
+                    },
+                    {
+                        "name": "impute",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to true to use Arbol-calculated multipliers on all soybean values",
+                        "default": false
+                    },
+                    {
+                        "name": "fill",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "set to true to use vhi-imputed yield values to fill gaps in sco",
+                        "default": false
+                    }
+                ],
+                "produces": [
+                    "text/csv"
+                ],
+                "tags": [
+                    "SCO Yield History"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "dClimate API",
+        "version": "v3",
+        "description": "<center> <h2>  Get decentralized weather data from dClimate IPFS Database. Using dWeather-Python-Client version: <b>2.1.3</b></h2> </center>\n\n---\n&nbsp;\n#### Getting started:\n#### [API Registration](https://api.dclimate.net/register)\n#### [API Usage Manual](https://github.com/dClimate/dClimate-API-Manual)\n#### [dClimate API Walkthough](https://www.youtube.com/watch?v=qrtGGbvLj40)\n&nbsp;\n#### Learn more about dClimate:\n#### [dClimate Home Page](https://www.dclimate.net/)\n#### [dClimate Github](https://github.com/dClimate)\n&nbsp;\n#### Data and Privacy:\n#### [dClimate API US Privacy Policy](https://api.dclimate.net/apiv3/privacy)\n#### [dClimate API GDPR Privacy Policy](https://api.dclimate.net/apiv3/privacy/gdpr)\n&nbsp;\n<center> <h2> API Documentation: </h2> </center>\n---"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Account Registration"
+        },
+        {
+            "name": "Dataset Information"
+        },
+        {
+            "name": "Grid File Dataset History"
+        },
+        {
+            "name": "Forecasts"
+        },
+        {
+            "name": "GHCN Dataset History"
+        },
+        {
+            "name": "CME Station History"
+        },
+        {
+            "name": "CME Futures"
+        },
+        {
+            "name": "EauFrance"
+        },
+        {
+            "name": "NE ISO Power"
+        },
+        {
+            "name": "Dutch Station History"
+        },
+        {
+            "name": "GHISD"
+        },
+        {
+            "name": "German Station History"
+        },
+        {
+            "name": "German Station Hourly History"
+        },
+        {
+            "name": "INMET"
+        },
+        {
+            "name": "Japan Station History"
+        },
+        {
+            "name": "CWV Station History"
+        },
+        {
+            "name": "UK National Grid"
+        },
+        {
+            "name": "Australia Station History"
+        },
+        {
+            "name": "Tropical Storms Data"
+        },
+        {
+            "name": "Teleconnections Data"
+        },
+        {
+            "name": "USDA RMA Codes"
+        },
+        {
+            "name": "SCO Yield History"
+        },
+        {
+            "name": "Transitional Yield Values"
+        },
+        {
+            "name": "FSA Irrigation Data"
+        },
+        {
+            "name": "Drought Monitor"
+        },
+        {
+            "name": "Biomass"
+        }
+    ],
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        }
+    }
+}
