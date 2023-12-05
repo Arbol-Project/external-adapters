@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
-contract SimpleV4ParametricPolygon is ChainlinkClient {
+contract SimpleV3ParametricPolygon is ChainlinkClient {
     using Chainlink for Chainlink.Request;
 
     // IMPORTANT: after deploying, must send required oracle payment to this example contract before calling sendRequest()
