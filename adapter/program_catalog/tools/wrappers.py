@@ -45,7 +45,7 @@ def get_australia_station_history_wrapper(args):
             dict with datetime.date keys and weather variable Quantities (or strs in the case of GUSTDIR) as values
             string unit
     '''
-    default_args = {"dataset": "bom_australia_stations-daily", "desired_units": None, "ipfs_timeout": None}
+    default_args = {"desired_units": None, "ipfs_timeout": None}
     default_args.update(args)
     data, unit = v3_client.get_australia_station_history(**default_args)
     data = pd.Series(data)
@@ -626,6 +626,8 @@ def parse_v4_request(data, req, map):
     }
     spatial_parameters = req.get('spatial_parameters', [])
     temporal_parameters = req.get('temporal_parameters', [])
+    if not temporal_parameters[0] == "time_range":
+        temporal_parameters = ["time_range"] + temporal_parameters
     parameters = spatial_parameters + temporal_parameters
     length = len(parameters)
     idx = 0
@@ -692,36 +694,57 @@ def operate_on_data(data, ops, args):
     if type(data) is dict or type(data) is io.BytesIO:
         return 0, no_unit, "Request not supported"
     # print(f'ops: {ops}, args: {args}, data: {data}')
-    reset = data
+    # reset = data
     for i, op in enumerate(ops):
         pandas_op = getattr(data, op)
         op_params = ast.literal_eval(args[i])
         # print(f'pandas_op: {pandas_op}, op_params: {op_params}')
-        return_result = op_params.pop(0)
-        carry_forward = op_params.pop(0)
+        # return_result = op_params.pop(-1)
+        # carry_forward = op_params.pop(0)
         result = pandas_op(*op_params)
+        data = result
         # print(f'result: {result}')
-        if return_result:
-            if type(result) is pd.Series or type(result) is pd.DataFrame:
-                result = result.mean()
-            if type(result) is date:
-                result = datetime(result.year, result.month, result.day)
-            if type(result) is time:
-                result = datetime(0, 0, 0, result.hour, result.minute, result.second, result.microsecond)
-            if type(result) is datetime:
-                return int(result.replace(tzinfo=timezone.utc).timestamp() * 1000), "ms since epoch", None
-            if type(result) is u.quantity.Quantity:
-                return int(float(result.value) * PRECISION), f'{result.unit} * {PRECISION}', None
-            elif 'float' in str(type(result)) or 'int' in str(type(result)):
-                if not data["unit"]:
-                    return int(float(result) * PRECISION), f'* {PRECISION}', None
-                else:
-                    return int(float(result) * PRECISION), f'{data["unit"]} * {PRECISION}', None
-            else:
-                print(f'result: {result}, type: {type(result)}')
-                return 0, no_unit, "Incompatible return type"
-        if carry_forward:
-            data = result
+        # if return_result:
+        #     if type(result) is pd.Series or type(result) is pd.DataFrame:
+        #         result = result.mean()
+        #     if type(result) is date:
+        #         result = datetime(result.year, result.month, result.day)
+        #     if type(result) is time:
+        #         result = datetime(0, 0, 0, result.hour, result.minute, result.second, result.microsecond)
+        #     if type(result) is datetime:
+        #         return int(result.replace(tzinfo=timezone.utc).timestamp() * 1000), "ms since epoch", None
+        #     if type(result) is u.quantity.Quantity:
+        #         return int(float(result.value) * PRECISION), f'{result.unit} * {PRECISION}', None
+        #     elif 'float' in str(type(result)) or 'int' in str(type(result)):
+        #         if not data["unit"]:
+        #             return int(float(result) * PRECISION), f'* {PRECISION}', None
+        #         else:
+        #             return int(float(result) * PRECISION), f'{data["unit"]} * {PRECISION}', None
+        #     else:
+        #         print(f'result: {result}, type: {type(result)}')
+        #         return 0, no_unit, "Incompatible return type"
+        # # if carry_forward:
+        # else:
+        #     data = result
+        # else:
+        #     data = reset
+    if type(result) is pd.Series or type(result) is pd.DataFrame:
+        result = result.mean()
+    if type(result) is date:
+        result = datetime(result.year, result.month, result.day)
+    if type(result) is time:
+        result = datetime(0, 0, 0, result.hour, result.minute, result.second, result.microsecond)
+    if type(result) is datetime:
+        return int(result.replace(tzinfo=timezone.utc).timestamp() * 1000), "ms since epoch", None
+    if type(result) is u.quantity.Quantity:
+        return int(float(result.value) * PRECISION), f'{result.unit} * {PRECISION}', None
+    elif 'float' in str(type(result)) or 'int' in str(type(result)):
+        if not data["unit"]:
+            return int(float(result) * PRECISION), f'* {PRECISION}', None
         else:
-            data = reset
-    return 0, no_unit, "No return specified"
+            return int(float(result) * PRECISION), f'{data["unit"]} * {PRECISION}', None
+    else:
+        print(f'result: {result}, type: {type(result)}')
+        return 0, no_unit, "Incompatible return type"
+    # always return the last result from now on
+    # return 0, no_unit, "No return specified"

@@ -107,9 +107,22 @@ curl -X POST "http://127.0.0.1:8000/api" \
 {
     "id": 0,
     "data": {
+        "request_url": "/apiv3/australia-station-history/Brisbane/TMAX",
+        "request_ops": ["max"],
+        "request_params": ["[]"]
+        }
+}
+EOF
+
+curl -X POST "http://127.0.0.1:8000/api" \
+-H "content-type:application/json" \
+--data-binary @- << EOF
+{
+    "id": 0,
+    "data": {
         "request_url": "/apiv3/grid-history/era5_land_precip-hourly/1.375_103.875?also_return_metadata=false&use_imperial_units=true&also_return_snapped_coordinates=false&convert_to_local_time=true",
         "request_ops": ["last", "mean"],
-        "request_params": ["[False, True, '1M']", "[True, False]"]
+        "request_params": ["['1M']", "[]"]
         }
 }
 EOF
@@ -122,7 +135,7 @@ curl -X POST "http://127.0.0.1:8000/api" \
     "data": {
         "request_url": "/apiv3/dutch-station-history/210/WINDSPEED?use_imperial_units=true",
         "request_ops": ["last", "max"],
-        "request_params": ["[False, True, '1M']", "[True, False]"]
+        "request_params": ["['1M']", "[]"]
         }
 }
 EOF
@@ -135,7 +148,7 @@ curl -X POST "http://127.0.0.1:8000/api" \
     "data": {
         "request_url": "/apiv4/geo_temporal_query/cpc_temp_min-daily?output_format=array",
         "spatial_parameters": ["point_params", "1.375", "103.875"],
-        "temporal_parameters": ["time_range", "2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"]
+        "temporal_parameters": ["2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"]
         }
 }
 EOF
@@ -148,8 +161,13 @@ curl -X POST "http://127.0.0.1:8000/api" \
     "data": {
         "request_url": "/apiv4/geo_temporal_query/chirps_final_25-daily?output_format=array",
         "spatial_parameters": ["point_params", "1.375", "103.875"],
-        "temporal_parameters": ["time_range", "2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"]
+        "temporal_parameters": ["2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"]
         }
 }
 EOF
 '''
+
+
+
+
+

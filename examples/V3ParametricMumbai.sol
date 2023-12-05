@@ -15,7 +15,7 @@ contract SimpleV3ParametricMumbai is ChainlinkClient {
 
     string request_URL = "/apiv3/dutch-station-history/210/WINDSPEED?use_imperial_units=true";
     string[] request_ops = ["last", "max"];
-    string[] request_params = ["[False, True, '1M']", "[True, False]"];
+    string[] request_params = ["['1M']", "[]"];
 
     uint256 public data;
     string public unit;

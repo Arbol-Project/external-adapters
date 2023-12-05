@@ -35,7 +35,7 @@ contract SimpleV4ParametricPolygon is ChainlinkClient {
      *
      * Example parameters for getting the max value in a specific time period
      */
-    string[] temporal_parameters = ["time_range", "2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"];
+    string[] temporal_parameters = ["2022-09-01", "2022-09-30", "temporal_agg_params", "all", "max", "1"];
 
     uint256 public data;
     string public unit;
