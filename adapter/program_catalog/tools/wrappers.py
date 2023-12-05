@@ -3,6 +3,7 @@ import io
 import json
 import re
 import ast
+import astropy.units as u
 import pandas as pd
 from datetime import timezone, datetime, date, time
 from urllib.parse import urlparse
@@ -142,6 +143,7 @@ def get_dutch_station_history_wrapper(args):
     '''
     default_args = {"dataset": "dutch_stations-daily", "desired_units": None, "ipfs_timeout": None}
     default_args.update(args)
+    # print(f'default_args: {default_args}')
     data, unit = v3_client.get_european_station_history(**default_args)
     # data = {k.__str__(): convert_quantity(v) for (k, v) in data.items()}
     data = pd.Series(data)
@@ -529,9 +531,9 @@ def get_api_mapping(swagger_dir):
 def parse_v3_request(data, req, map):
     # get endpoint
     request_parsed = list(urlparse(data))
-    print(f'request_parsed: {request_parsed}')
+    # print(f'request_parsed: {request_parsed}')
     request_paths = request_parsed[2].split('/')
-    print(f'request_paths: {request_paths}')
+    # print(f'request_paths: {request_paths}')
     key = request_paths[1]
     if key == 'drought-monitor':
         print('replacing "-" separator with "_" in drought-monitor parameters')
@@ -602,9 +604,9 @@ def parse_v4_request(data, req, map):
         'rolling_add_params': (["window_size", "agg_method"], [int, str]),
     }
     request_data = list(urlparse(data))
-    print(f'request_data: {request_data}')
+    # print(f'request_data: {request_data}')
     request_paths = request_data[2].split('/')
-    print(f'request_paths: {request_paths}')
+    # print(f'request_paths: {request_paths}')
     key = request_paths[1]
     dataset_name = request_paths[2]
     if request_data[4] != '':
@@ -678,8 +680,9 @@ def operate_on_data(data, ops, args):
         dates are returned as timestamps starting at beginning of unix epoch to start of date
         ms on timestamps
     '''
+    no_unit = "n/a"
     if type(data) is dict or type(data) is io.BytesIO:
-        return 0, "Request not supported"
+        return 0, no_unit, "Request not supported"
     reset = data
     for i, op in enumerate(ops):
         pandas_op = getattr(data, op)
@@ -696,15 +699,18 @@ def operate_on_data(data, ops, args):
                 result = datetime(0, 0, 0, result.hour, result.minute, result.second, result.microsecond)
             if type(result) is datetime:
                 return int(result.replace(tzinfo=timezone.utc).timestamp() * 1000), "ms since epoch", None
+            if type(result) is u.quantity.Quantity:
+                return int(float(result.value) * PRECISION), f'{result.unit} * {PRECISION}', None
             elif 'float' in str(type(result)) or 'int' in str(type(result)):
                 if not data["unit"]:
-                    return int(float(result) * PRECISION), data["unit"], None
+                    return int(float(result) * PRECISION), f'* {PRECISION}', None
                 else:
                     return int(float(result) * PRECISION), f'{data["unit"]} * {PRECISION}', None
             else:
-                return 0, "Incompatible return type"
+                print(f'result: {result}, type: {type(result)}')
+                return 0, no_unit, "Incompatible return type"
         if carry_forward:
             data = result
         else:
             data = reset
-    return 0, "No return specified"
+    return 0, no_unit, "No return specified"

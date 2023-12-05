@@ -59,12 +59,15 @@ class dClimateAdapter:
                 if msg is not None:
                     self.request_error = msg
                     self.result_error()
-
-            # currently only supporting return values and units, not metadata, snapped cooordinates, etc
-            # also first just one return value at a time (along with unit)
-            # unit is now a failure message if fail, adapter no longer returns 500 response on fail
-            payload = {'unit': result['unit'], 'data': result['data']}
-            self.result_success(payload)
+                else:
+                    payload = {'unit': result['unit'], 'data': result['data']}
+                    self.result_success(payload)
+            else:
+                # currently only supporting return values and units, not metadata, snapped cooordinates, etc
+                # also first just one return value at a time (along with unit)
+                # unit is now a failure message if fail, adapter no longer returns 500 response on fail
+                payload = {'unit': result['unit'], 'data': result['data']}
+                self.result_success(payload)
         except Exception as e:
             print(e)
             raise e
@@ -89,6 +92,7 @@ class dClimateAdapter:
 
             Parameters: error (str), associated error message
         '''
+        print(f'error message: {self.request_error}')
         self.result = {
             'jobRunID': self.id,
             'result': {'unit': self.request_error, 'data': 0},
@@ -97,6 +101,19 @@ class dClimateAdapter:
 
 
 '''
+curl -X POST "http://127.0.0.1:8000/api" \
+-H "content-type:application/json" \
+--data-binary @- << EOF
+{
+    "id": 0,
+    "data": {
+        "request_url": "/apiv3/dutch-station-history/210/WINDSPEED?use_imperial_units=true",
+        "request_ops": ["last", "max"],
+        "request_params": ["[False, True, '1M']", "[True, False]"]
+        }
+}
+EOF
+
 curl -X POST "http://127.0.0.1:8000/api" \
 -H "content-type:application/json" \
 --data-binary @- << EOF
