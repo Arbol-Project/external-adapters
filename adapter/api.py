@@ -120,7 +120,7 @@ curl -X POST "http://127.0.0.1:8000/api" \
 {
     "id": 0,
     "data": {
-        "request_url": "/apiv3/grid-history/era5_land_precip-hourly/1.375_103.875?also_return_metadata=false&use_imperial_units=true&also_return_snapped_coordinates=false&convert_to_local_time=true",
+        "request_url": "/apiv3/grid-history/era5_land_precip-hourly/1.375_103.875?use_imperial_units=true&convert_to_local_time=true",
         "request_ops": ["last", "mean"],
         "request_params": ["['1M']", "[]"]
         }

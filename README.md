@@ -16,7 +16,7 @@ On-Chain Addresses
         - **Polygon**: `80062f57-3ef7-4d06-b370-c52886dc2d8b`
         - **Mumbai**: `cb30734b-90b0-44d9-82b8-f5a1d63faf7e`
     - Inputs:
-        - `string request_url`: the request URL following the format for API requests to `https://api.dclimate.net/` but excluding the root domain. See supported request types below
+        - `string request_url`: the request URL following the format for API requests to `https://api.dclimate.net/` but excluding the root domain. See supported request endpoints below
         - `string[] request_ops`: the request operations as a list of strings matching [Pandas.Series](https://pandas.pydata.org/docs/reference/series.html) or [Pandas.DataFrame](https://pandas.pydata.org/docs/reference/frame.html) methods to be used on the requested data to produce a single output for writing back to chain
             - Format: `[<op_1>, <op_2>,...]`
             - Example: `["last", "min"]`
@@ -26,29 +26,46 @@ On-Chain Addresses
     - Outputs:
         - `uint64 value`: the final value returned performing the requested operations on the retrieved data. All numerical values that are not timestamps are multiplied by `1e18` and cast to `uint64` before being returned on-chain
         - `string memory unit`: the unit for the returned final value, if applicable. If the request fails, the adapter attempts to return an error message in the unit slot
-    <!-- - `cme-futures` -->
-    - Request Type: `australia-station-history`
-        - Request URL:
-            - Format: `"/apiv3/australia-station-history/<station_name>/<weather_variable>?desired_units=<desired_units>&as_of=<as_of>"`
+    - Request URLs:
+        - Endpoint: `australia-station-history`
+            - Format: `"/apiv3/australia-station-history/{station_name}/{weather_variable}?desired_units=<desired_units>&as_of=<as_of>"`
             - URL Parameters:
-                - `station_name`: name of geotemporal dataset, accepts values from `enums.australia-station-history.txt`
+                - `station_name`: name of station, accepts values from `enums.australia-station-history.txt`
                 - `weather_variable`: weather variable to get data for, accepts values from `["TMAX","TMIN","PRCP","GUSTSPEED","GUSTDIR"]`
             - Optional URL Arguments:
                 - `desired_units`: desired units to convert the output to, defaults to `None` (i.e. default dataset units)
                 - `as_of`: an ISO formatted date representing the version of the data to use, defaults to `None` (i.e. current)
             - Example: `string request_URL = "/apiv3/australia-station-history/Brisbane/TMAX";`
+        <!-- - `cme-futures` -->
         <!-- - `cme-history` -->
         <!-- - `cwv-station-history` -->
-        <!-- - `dutch-station-history`
-            - Inputs:  -->
+        - Endpoint: `dutch-station-history`
+            - Format: `"/apiv3/dutch-station-history/{station_name}/{weather_variable}?use_imperial_units=<use_imperial_units>&desired_units=<desired_units>"`
+            - URL Parameters:
+                - `station_name`: number of station, accepts values from `enums.dutch-station-history.txt`
+                - `weather_variable`: weather variable to get data for, accepts values from `["WINDSPEED","RADIATION","TMAX","TMIN","TAVG"]`
+            - Optional URL Arguments:
+                - `use_imperial_units`: whether to use imperial or metric units, defaults to `True`
+                - `desired_units`: desired units to convert the output to, defaults to `None` (i.e. default dataset units)
+            - Example: `string request_URL = "/apiv3/dutch-station-history/210/WINDSPEED?use_imperial_units=true";`
         <!-- - `eaufrance` -->
         <!-- - `forecasts` -->
         <!-- - `german-station-history` -->
         <!-- - `german-station-hourly-history` -->
         <!-- - `ghcn-history` -->
         <!-- - `ghisd-station-history` -->
-        <!-- - `grid-history`
-            - Inputs:  -->
+        - Endpoint: `grid-history`
+            - Format: `"/apiv3/grid-history/{dataset}/{lat}_{lon}?use_imperial_units=<use_imperial_units>&desired_units=<desired_units>&convert_to_local_time=<convert_to_local_time>&as_of=<as_of>"`
+            - URL Parameters:
+                - `dataset`: name of gridded dataset, accepts values from `enums.grid-history.txt`
+                - `lat`: latitude of desired data, float
+                - `lon`: longitude of desired data, float
+            - Optional URL Arguments:
+                - `use_imperial_units`: whether to use imperial or metric units, defaults to `True`
+                - `desired_units`: desired units to convert the output to, defaults to `None` (i.e. default dataset units)
+                - `convert_to_local_time`: whether to convert results to local timezone, defaults to `True`
+                - `as_of`: an ISO formatted date representing the version of the data to use, defaults to `None` (i.e. current)
+            - Example: `string request_URL = "/apiv3/grid-history/era5_land_precip-hourly/1.375_103.875?use_imperial_units=true&convert_to_local_time=true";`
         <!-- - `inmet` -->
         <!-- - `japan-station-history` -->
         <!-- - `power-history/ne_iso/load` -->
@@ -60,7 +77,7 @@ On-Chain Addresses
         - **Polygon**: `7678aeaa-5bfa-4811-b0a1-6b5a6f05069a`
         - **Mumbai**: `b886eeae-31f7-46ac-898c-5b568a9a5503`
     - Inputs:
-        - `string request_url`: the request URL following the format for API requests to `https://api.dclimate.net/` but excluding the root domain. See supported request types below
+        - `string request_url`: the request URL following the format for API requests to `https://api.dclimate.net/` but excluding the root domain. See supported request endpoints below
         - `string[] spatial_parameters`: parameters for spatial filtering, requires that the first element be one of the Spatial Filters below and the remaining elements be the associated input values (in displayed order). All spatial units are in degrees of latitude/longitude unless otherwise specified. The `epsg_crs` for `polygon_params` and `multiple_points_params` refers to the Coordinate Reference System (projection) of the dataset. It defaults to 4326 (WGS84), or recommended projection 
             - Format: `[<spatial_filter_name>, <filter_input_1>, <filter_input_2>,...]`
             - Spatial Filters:
@@ -83,13 +100,13 @@ On-Chain Addresses
     - Outputs:
         - `uint64 value`: the final value returned after aggregating the requested data. All numerical values that are not timestamps are multiplied by `1e18` and cast to `uint64` before being returned on-chain
         - `string memory unit`: the unit for the returned final value, if applicable. If the request fails, the adapter attempts to return an error message in the unit slot
-    - Request Type: `geo_temporal_query`
-        - Request URL:
-            - Format: `"/apiv4/geo_temporal_query/<dataset_name>?output_format=<desired_format>"`
+    - Request URLs:
+        - Endpoint: `geo_temporal_query`
+            - Format: `"/apiv4/geo_temporal_query/{dataset}?output_format=<output_format>"`
             - URL Parameters:
-                - `dataset_name`: name of geotemporal dataset, accepts values from `enums.geo_temporal_query.txt`
+                - `dataset`: name of geotemporal dataset, accepts values from `enums.geo_temporal_query.txt`
             - Optional URL Arguments:
-                - `desired_format`: desired output format, accepts values from `[array]`, defaults to `array`
+                - `output_format`: desired output format, accepts values from `[array]`, defaults to `array`
             - Example: `string request_URL = "/apiv4/geo_temporal_query/chirps_final_25-daily?output_format=array";`
         - Types of invalid requests include:
             - Specifying too many points or too large areas
