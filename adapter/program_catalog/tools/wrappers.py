@@ -531,9 +531,9 @@ def get_api_mapping(swagger_dir):
 def parse_v3_request(data, req, map):
     # get endpoint
     request_parsed = list(urlparse(data))
-    # print(f'request_parsed: {request_parsed}')
+    print(f'request_parsed: {request_parsed}')
     request_paths = request_parsed[2].split('/')
-    # print(f'request_paths: {request_paths}')
+    print(f'request_paths: {request_paths}')
     key = request_paths[1]
     if key == 'drought-monitor':
         print('replacing "-" separator with "_" in drought-monitor parameters')
@@ -549,15 +549,20 @@ def parse_v3_request(data, req, map):
     endpoint_primaries = api_endpoint['primary']
     endpoint_secondaries = api_endpoint['secondary']
     if 'dataset' in endpoint_primaries:
-        params = [request_paths[1]]
-        for req in request_paths[2:]:
-            params += req.split('_')
+        params = [request_paths[2]]
+        try:
+            for req_path in request_paths[3:]:
+                params += req_path.split('_')
+        except IndexError as e:
+            print(f'IndexError caught: {e}')
+            pass
     else:
         params = re.split('_|/', request_parsed[2])[2:]
     if request_parsed[4] == '':
         queries = []
     else:
         queries = request_parsed[4].split('&')
+    # print(f'params: {params}, queries: {queries}')
     if len(params) != len(endpoint_primaries):
         print(f'params: {params}, endpoint_primaries: {endpoint_primaries}')
         return 'Improperly formatted request URL, incompatible parameters', False, None, []
@@ -591,6 +596,7 @@ def parse_v3_request(data, req, map):
     return args, True, req.get('request_ops', None), req.get('request_params', [])
 
 
+
 def parse_v4_request(data, req, map):
     geo_temporal_parameters = {
         'point_params': (["lat", "lon"], [float, float]),
@@ -604,9 +610,9 @@ def parse_v4_request(data, req, map):
         'rolling_add_params': (["window_size", "agg_method"], [int, str]),
     }
     request_data = list(urlparse(data))
-    # print(f'request_data: {request_data}')
+    print(f'request_data: {request_data}')
     request_paths = request_data[2].split('/')
-    # print(f'request_paths: {request_paths}')
+    print(f'request_paths: {request_paths}')
     key = request_paths[1]
     dataset_name = request_paths[2]
     if request_data[4] != '':
@@ -664,7 +670,9 @@ def get_request_data(args):
     for base_path in API_MAPS.keys():
         if key in API_MAPS[base_path]['paths'].keys():
             api_endpoint = API_MAPS[base_path]['paths'][key]
+            # print(f'api_endpoint: {api_endpoint}, args: {args}')
             data = api_endpoint['function'](args)
+            # print(f'data: {data}')
             if "unit" not in data:
                 data["unit"] = None
             return data
@@ -683,13 +691,16 @@ def operate_on_data(data, ops, args):
     no_unit = "n/a"
     if type(data) is dict or type(data) is io.BytesIO:
         return 0, no_unit, "Request not supported"
+    # print(f'ops: {ops}, args: {args}, data: {data}')
     reset = data
     for i, op in enumerate(ops):
         pandas_op = getattr(data, op)
         op_params = ast.literal_eval(args[i])
+        # print(f'pandas_op: {pandas_op}, op_params: {op_params}')
         return_result = op_params.pop(0)
         carry_forward = op_params.pop(0)
         result = pandas_op(*op_params)
+        # print(f'result: {result}')
         if return_result:
             if type(result) is pd.Series or type(result) is pd.DataFrame:
                 result = result.mean()

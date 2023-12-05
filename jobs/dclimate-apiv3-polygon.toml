@@ -1,7 +1,7 @@
 type = "directrequest"
 schemaVersion = 1
-name = "dclimate-apiv4-polygon"
-externalJobID = "7678aeaa-5bfa-4811-b0a1-6b5a6f05069a"
+name = "dclimate-apiv3-polygon"
+externalJobID = "80062f57-3ef7-4d06-b370-c52886dc2d8b"
 maxTaskDuration = "30s"
 contractAddress = "0x2621E9C0bc1975E74Ec465DF7357607E617C7FF9"
 evmChainID = "137"
@@ -12,7 +12,7 @@ observationSource = """
                   data="$(jobRun.logData)"
                   topics="$(jobRun.logTopics)"]
     decode_cbor  [type=cborparse data="$(decode_log.data)"]
-    api_adapter  [type="bridge" name="api-adapter" timeout="600s" requestData="{\\"data\\":{\\"request_url\\": $(decode_cbor.request_url), \\"spatial_parameters\\": $(decode_cbor.spatial_parameters), \\"temporal_parameters\\": $(decode_cbor.temporal_parameters)}}"]
+    api_adapter  [type="bridge" name="api-adapter" timeout="600s" requestData="{\\"data\\":{\\"request_url\\": $(decode_cbor.request_url), \\"request_ops\\": $(decode_cbor.request_ops), \\"request_params\\": $(decode_cbor.request_params)}}"]
     
     decode_log -> decode_cbor -> api_adapter
 

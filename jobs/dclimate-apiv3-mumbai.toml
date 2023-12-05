@@ -1,30 +1,30 @@
 type = "directrequest"
 schemaVersion = 1
-name = "dclimate-apiv4-polygon"
-externalJobID = "7678aeaa-5bfa-4811-b0a1-6b5a6f05069a"
+name = "dclimate-apiv3-mumbai"
+externalJobID = "cb30734b-90b0-44d9-82b8-f5a1d63faf7e"
 maxTaskDuration = "30s"
-contractAddress = "0x2621E9C0bc1975E74Ec465DF7357607E617C7FF9"
-evmChainID = "137"
-minContractPaymentLinkJuels = "10000000000000000"
+contractAddress = "0x59FA4e3Fd486E5798C8F8d884f0F65A51A5dFF43"
+evmChainID = "80001"
+minContractPaymentLinkJuels = "10000000000"
 observationSource = """
     decode_log   [type=ethabidecodelog
                   abi="OracleRequest(bytes32 indexed specId, address requester, bytes32 requestId, uint256 payment, address callbackAddr, bytes4 callbackFunctionId, uint256 cancelExpiration, uint256 dataVersion, bytes data)"
                   data="$(jobRun.logData)"
                   topics="$(jobRun.logTopics)"]
     decode_cbor  [type=cborparse data="$(decode_log.data)"]
-    api_adapter  [type="bridge" name="api-adapter" timeout="600s" requestData="{\\"data\\":{\\"request_url\\": $(decode_cbor.request_url), \\"spatial_parameters\\": $(decode_cbor.spatial_parameters), \\"temporal_parameters\\": $(decode_cbor.temporal_parameters)}}"]
+    api_adapter  [type="bridge" name="api-adapter" timeout="600s" requestData="{\\"data\\":{\\"request_url\\": $(decode_cbor.request_url), \\"request_ops\\": $(decode_cbor.request_ops), \\"request_params\\": $(decode_cbor.request_params)}}"]
     
     decode_log -> decode_cbor -> api_adapter
 
-    data_parse   [type=jsonparse path="result,data" data="$(api_adapter)"]
     unit_parse   [type=jsonparse path="result,unit" data="$(api_adapter)"]
+    data_parse   [type=jsonparse path="result,data" data="$(api_adapter)"]
 
     encode_data  [type=ethabiencode abi="(bytes32 requestId, uint64 _value, string _unit)" data="{ \\"requestId\\": $(decode_log.requestId), \\"_value\\": $(data_parse), \\"_unit\\": $(unit_parse) }"]
     encode_tx    [type=ethabiencode
                   abi="fulfillOracleRequest2(bytes32 requestId, uint256 payment, address callbackAddress, bytes4 callbackFunctionId, uint256 expiration, bytes calldata data)"
                   data="{\\"requestId\\": $(decode_log.requestId), \\"payment\\": $(decode_log.payment), \\"callbackAddress\\": $(decode_log.callbackAddr), \\"callbackFunctionId\\": $(decode_log.callbackFunctionId), \\"expiration\\": $(decode_log.cancelExpiration), \\"data\\": $(encode_data)}"
                  ]
-    submit_tx    [type=ethtx from="[\\"0xa83ef656DB50ab9E82B8D1c569F427378f36171B\\"]" evmChainID="137" to="0x2621E9C0bc1975E74Ec465DF7357607E617C7FF9" data="$(encode_tx)"]
+    submit_tx    [type=ethtx from="[\\"0x7bF0F792609E25Dd3048D489BDABe5017195481e\\"]" evmChainID="80001" to="0x59FA4e3Fd486E5798C8F8d884f0F65A51A5dFF43" data="$(encode_tx)"]
     
     api_adapter -> unit_parse -> encode_data
     api_adapter -> data_parse -> encode_data

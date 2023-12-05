@@ -107,6 +107,19 @@ curl -X POST "http://127.0.0.1:8000/api" \
 {
     "id": 0,
     "data": {
+        "request_url": "/apiv3/grid-history/era5_land_precip-hourly/1.375_103.875?also_return_metadata=false&use_imperial_units=true&also_return_snapped_coordinates=false&convert_to_local_time=true",
+        "request_ops": ["last", "mean"],
+        "request_params": ["[False, True, '1M']", "[True, False]"]
+        }
+}
+EOF
+
+curl -X POST "http://127.0.0.1:8000/api" \
+-H "content-type:application/json" \
+--data-binary @- << EOF
+{
+    "id": 0,
+    "data": {
         "request_url": "/apiv3/dutch-station-history/210/WINDSPEED?use_imperial_units=true",
         "request_ops": ["last", "max"],
         "request_params": ["[False, True, '1M']", "[True, False]"]
